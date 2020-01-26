@@ -24,6 +24,7 @@ defmodule E2E.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import E2E.DataCase
+      import E2E.Factory
     end
   end
 

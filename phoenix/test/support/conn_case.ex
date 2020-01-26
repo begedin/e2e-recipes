@@ -21,6 +21,7 @@ defmodule E2EWeb.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
+      import E2E.Factory
       alias E2EWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
