@@ -27,5 +27,11 @@ defmodule E2EWeb.Router do
     get("/users/:id", UserController, :show)
     put("/users/:id", UserController, :update)
     delete("/users/:id", UserController, :delete)
+
+    get("/todos", TodoController, :index)
+    post("/todos", TodoController, :create)
+    get("/todos/:id", TodoController, :show)
+    put("/todos/:id", TodoController, :update)
+    delete("/todos/:id", TodoController, :delete)
   end
 end

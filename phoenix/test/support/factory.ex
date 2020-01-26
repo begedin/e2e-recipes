@@ -8,4 +8,11 @@ defmodule E2E.Factory do
       password: sequence(:password, &"password-#{&1}")
     }
   end
+
+  def todo_factory do
+    %E2E.Todos.Todo{
+      title: sequence(:title, &"To Do #{&1}"),
+      user: build(:user)
+    }
+  end
 end
