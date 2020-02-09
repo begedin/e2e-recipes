@@ -1,24 +1,23 @@
 <template>
-  <form class="login" @submit.prevent="login">
+  <form class="register" @submit.prevent="register">
     <input type="text" required v-model="name" />
     <input type="password" required v-model="password" />
-    <button type="submit">Login</button>
+    <button type="submit">Register</button>
   </form>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-@Component({ name: 'Login' })
-export default class Login extends Vue {
+@Component({ name: 'Register' })
+export default class Register extends Vue {
   name: string = 'nikola'
 
   password: string = 'password'
 
-  async login() {
+  register() {
     const { name, password } = this;
-    await this.$store.dispatch('login', { name, password });
-    this.$router.push('/');
+    this.$store.dispatch('register', { name, password });
   }
 }
 </script>

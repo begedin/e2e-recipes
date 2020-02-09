@@ -14,5 +14,6 @@ defmodule E2E.Accounts.User do
     user
     |> cast(attrs, [:name, :password])
     |> validate_required([:name, :password])
+    |> unique_constraint(:name)
   end
 end

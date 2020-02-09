@@ -22,6 +22,8 @@ defmodule E2EWeb.Router do
   scope "/api/", E2EWeb do
     pipe_through(:api)
 
+    post("/login", TokenController, :login)
+
     get("/users", UserController, :index)
     post("/users", UserController, :create)
     get("/users/:id", UserController, :show)

@@ -19,4 +19,11 @@ defmodule E2EWeb.FallbackController do
     |> put_view(E2EWeb.ChangesetView)
     |> render("error.json", %{changeset: changeset})
   end
+
+  def call(conn, {:error, :login_invalid}) do
+    conn
+    |> put_status(401)
+    |> put_view(E2EWeb.ErrorView)
+    |> render("error.json", %{reason: "login_invalid"})
+  end
 end

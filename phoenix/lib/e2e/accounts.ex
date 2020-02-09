@@ -89,16 +89,12 @@ defmodule E2E.Accounts do
     Repo.delete(user)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking user changes.
-
-  ## Examples
-
-      iex> change_user(user)
-      %Ecto.Changeset{source: %User{}}
-
-  """
-  def change_user(%User{} = user) do
-    User.changeset(user, %{})
+  def login(%{"name" => name, "password" => password}) do
+    case User |> Repo.get_by(name: name, password: password) do
+      nil -> {:error, :login_invalid}
+      %User{id: id} -> {:ok, Phoenix.Token.sign(E2EWeb.Endpoint, "secret", %{id: id})}
+    end
   end
+
+  def login(_), do: {:error, :login_invalid}
 end

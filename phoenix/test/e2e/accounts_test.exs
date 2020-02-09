@@ -49,9 +49,13 @@ defmodule E2E.AccountsTest do
       assert_raise Ecto.NoResultsError, fn -> Accounts.get_user!(user.id) end
     end
 
-    test "change_user/1 returns a user changeset" do
+    test "login/1 creates token on valid params" do
       user = insert(:user)
-      assert %Ecto.Changeset{} = Accounts.change_user(user)
+      assert {:ok, _token} = Accounts.login(%{"name" => user.name, "password" => user.password})
+    end
+
+    test "login/1 responds with error on invalid params" do
+      assert {:error, :login_invalid} = Accounts.login(%{"name" => "foo", "password" => "bar"})
     end
   end
 end
