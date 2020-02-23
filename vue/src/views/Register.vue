@@ -1,7 +1,13 @@
 <template>
   <form class="register" @submit.prevent="register">
-    <input type="text" required v-model="name" />
-    <input type="password" required v-model="password" />
+    <label>
+      Name
+      <input type="text" required v-model="name" />
+    </label>
+    <label>
+      Password
+      <input type="password" required v-model="password" />
+    </label>
     <button type="submit">Register</button>
   </form>
 </template>
@@ -23,5 +29,4 @@ export default class Register extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

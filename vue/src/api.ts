@@ -20,7 +20,12 @@ export const post = async <T = any>(url: string, data: {}) => {
   return response.data as { data: T };
 };
 
-export const get = async (url: string, params: {}) => {
+export const get = async <T = any>(url: string, params: {} = {}) => {
   const response = await client().get(url, { params });
-  return response.data;
+  return response.data as { data: T };
+};
+
+export const remove = async <T = any>(url: string, params: {} = {}) => {
+  const response = await client().delete(url, { params });
+  return response.data as { data: T };
 };

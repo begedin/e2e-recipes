@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Component from 'vue-class-component';
-import Home from '@/views/Home.vue';
+import Todos from '@/views/Todos.vue';
 import Register from '@/views/Register.vue';
 import Login from '@/views/Login.vue';
 
@@ -28,14 +28,16 @@ const LoginRoute = {
   component: Login,
 };
 
+const TodosRoute = {
+  path: '/',
+  name: 'todos',
+  component: Todos,
+};
+
 const routes = [
   RegisterRoute,
   LoginRoute,
-  {
-    path: '/',
-    name: 'home',
-    component: Home,
-  },
+  TodosRoute,
 ];
 
 const router = new VueRouter({

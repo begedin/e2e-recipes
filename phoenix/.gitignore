@@ -36,3 +36,6 @@
 /priv/static/
 
 /.elixir_ls
+
+# asdf
+.tool-versions
