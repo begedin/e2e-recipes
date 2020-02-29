@@ -2,6 +2,7 @@ defmodule E2E.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:id, :name, :password]}
   schema "users" do
     field :name, :string
     field :password, :string

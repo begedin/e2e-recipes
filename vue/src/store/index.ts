@@ -25,7 +25,8 @@ const actions: ActionTree<State, State> = {
   },
 
   async login({ commit }, { name, password }) {
-    const { data: token } = await post<string>('login', { login: { name, password } });
+    const login = { name, password };
+    const { data: token } = await post<string>('login', { login });
     localStorage.setItem('token', token);
     commit('SET_AUTHENTICATED', true);
   },

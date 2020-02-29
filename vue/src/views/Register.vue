@@ -21,9 +21,10 @@ export default class Register extends Vue {
 
   password: string = 'password'
 
-  register() {
+  async register() {
     const { name, password } = this;
-    this.$store.dispatch('register', { name, password });
+    await this.$store.dispatch('register', { name, password });
+    this.$router.push('/');
   }
 }
 </script>

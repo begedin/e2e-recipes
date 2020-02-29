@@ -15,7 +15,8 @@ module.exports = {
     'brace-style': ['error', '1tbs', { 'allowSingleLine': true }],
     '@typescript-eslint/no-unused-vars': 'error',
     'arrow-parens': ['error', 'as-needed'],
-    'no-multiple-empty-lines': ['error', { max: 1 }]
+    'no-multiple-empty-lines': ['error', { max: 1 }],
+    'max-len': ['error', { code: 80 }]
   },
   parserOptions: {
     parser: '@typescript-eslint/parser',

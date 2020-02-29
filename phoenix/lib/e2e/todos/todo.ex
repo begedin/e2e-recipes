@@ -2,6 +2,7 @@ defmodule E2E.Todos.Todo do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:id, :title, :user_id]}
   schema "todos" do
     field(:title, :string)
 

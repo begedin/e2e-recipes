@@ -10,7 +10,11 @@ defmodule E2E.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      preferred_cli_env: [
+        "e2e.server": :e2e,
+        "e2e.reset": :e2e
+      ]
     ]
   end
 
@@ -26,6 +30,7 @@ defmodule E2E.MixProject do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(:e2e), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
@@ -41,7 +46,7 @@ defmodule E2E.MixProject do
       {:ex_machina, "~> 2.3.0", only: [:test, :e2e]},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.11"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:phoenix_live_reload, "~> 1.2", only: [:dev, :e2e]},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"}
@@ -58,7 +63,9 @@ defmodule E2E.MixProject do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate", "test"],
+      "e2e.server": ["phx.server"],
+      "e2e.reset": ["ecto.reset"]
     ]
   end
 end
