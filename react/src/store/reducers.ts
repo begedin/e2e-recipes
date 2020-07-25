@@ -4,7 +4,8 @@ import {
   REQUEST_TODOS,
   RECEIVE_TODOS,
   ADD_TODO,
-  RECEIVE_REGISTER
+  RECEIVE_REGISTER,
+  LOGOUT
 } from './actionTypes'
 
 const initialState = (): RootState => ({
@@ -29,6 +30,9 @@ const rootReducer = (state: RootState = initialState(), action: AppAction) => {
       return Object.assign({}, state, { authenticated: true })
     case RECEIVE_REGISTER:
       return Object.assign({}, state, { user: action.user })
+    case LOGOUT:
+      window.localStorage.removeItem('token')
+      return Object.assign({}, state, { authenticated: false })
     default:
       return state
   }

@@ -10,7 +10,8 @@ import {
   AppThunk,
   RequestLoginAction,
   ReceiveLoginAction,
-  User
+  User,
+  LogoutAction
 } from './types'
 import {
   REQUEST_REGISTER,
@@ -20,7 +21,8 @@ import {
   REQUEST_TODOS,
   RECEIVE_TODOS,
   REQUEST_LOGIN,
-  RECEIVE_LOGIN
+  RECEIVE_LOGIN,
+  LOGOUT
 } from './actionTypes'
 
 export const requestLogin = (): RequestLoginAction => ({ type: REQUEST_LOGIN })
@@ -34,6 +36,8 @@ export const login: AppThunk<void, User> = (login: User) => async dispatch => {
   const { data: token } = await post<string>('login', { login })
   dispatch(receiveLogin(token))
 }
+
+export const logout = (): LogoutAction => ({ type: LOGOUT })
 
 export const requestRegister = (): RequestRegisterAction => ({
   type: REQUEST_REGISTER
