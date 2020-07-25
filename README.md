@@ -5,7 +5,7 @@ For the phoenix backend, move into /phoenix
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.setup`
   * Install Node.js dependencies with `cd assets && npm install`
-  * Start Phoenix endpoint with `mix phx.server`
+  * Start Phoenix endpoint in E2E mode with `MIX_ENV=e2e mix phx.server`
 
 # VUE
 
