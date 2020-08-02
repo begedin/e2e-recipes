@@ -1,4 +1,4 @@
-import { get, post } from '../api'
+import { get, post, remove } from '../api'
 import {
   AddTodoAction,
   RequestRegisterAction,
@@ -55,15 +55,6 @@ export const register: AppThunk<void, User> = (
   dispatch(receiveRegister(data))
 }
 
-export const addTodo = (todo: Todo): AddTodoAction => ({
-  type: ADD_TODO,
-  todo
-})
-
-export const removeTodo = (todo: Todo): RemoveTodoAction => ({
-  type: REMOVE_TODO
-})
-
 export const requestTodos = (): RequestTodosAction => ({ type: REQUEST_TODOS })
 
 export const receiveTodos = (data: Todo[]): ReceiveTodosAction => ({
@@ -77,11 +68,25 @@ export const fetchTodos: AppThunk = () => async dispatch => {
   dispatch(receiveTodos(todos))
 }
 
-export const createTodo: AppThunk<void, string> = () => async (
-  dispatch,
-  getState,
-  title
+export const addTodo = (todo: Todo): AddTodoAction => ({
+  type: ADD_TODO,
+  todo
+})
+
+export const createTodo: AppThunk<void, string> = (title: string) => async (
+  dispatch
 ) => {
-  const { data: todo } = await post('todos', { title })
+  const { data: todo } = await post('todos', { todo: { title } })
   dispatch(addTodo(todo))
+}
+
+export const removeTodo = (todo: Todo): RemoveTodoAction => ({
+  type: REMOVE_TODO
+})
+
+export const deleteTodo: AppThunk<void, Todo> = (todo: Todo) => async (
+  dispatch
+) => {
+  await remove(`todos/${todo.id}`)
+  dispatch(removeTodo(todo))
 }
