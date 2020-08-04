@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { register } from '../store/actions'
+import { register, login } from '../store/actions'
 import { AppDispatch } from '../store/types'
 
 type RegisterProps = {
@@ -13,11 +13,15 @@ type RegisterState = {
   password: string
 }
 
-const submit = (vm: Register, event: React.FormEvent<HTMLFormElement>) => {
+const submit = async (
+  vm: Register,
+  event: React.FormEvent<HTMLFormElement>
+) => {
   event.preventDefault()
   const { dispatch } = vm.props
   const { name, password } = vm.state
-  dispatch(register({ name, password }))
+  await dispatch(register({ name, password }))
+  dispatch(login({ name, password }))
 }
 
 class Register extends Component<RegisterProps, RegisterState> {

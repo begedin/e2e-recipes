@@ -6,7 +6,7 @@ defmodule E2E.SandboxEnforcerPlug do
 
   - the `GET /api/ping` endpoint is enabled, which is used by Jenkins to check if API is up
   - the `POST /api/sandbox` and `DELETE /api/sandbox` endpoints are enabled, to checkout and checkin an Ecto sandbox connection
-  - all other endpoints return an error if a `sandbox-id` header with a valid sandbox id is not present
+  - all other endpoints return an error if a `sandbox` header with a valid sandbox id is not present
   """
   @behaviour Plug
 
@@ -35,10 +35,10 @@ defmodule E2E.SandboxEnforcerPlug do
   end
 
   defp resolve_sandbox_checkin(conn, nil) do
-    message = "Attempting to check in a sandbox session, but no sandbox-id in headers, sent 400"
+    message = "Attempting to check in a sandbox session, but no sandbox in headers, sent 400"
     Logger.error(message)
 
-    conn |> Conn.send_resp(400, "Provide a valid sandbox-id header")
+    conn |> Conn.send_resp(400, "Provide a valid sandbox header")
   end
 
   defp resolve_sandbox_checkin(conn, sandbox_id) do
@@ -47,13 +47,13 @@ defmodule E2E.SandboxEnforcerPlug do
   end
 
   defp ensure_sandbox_id(conn, method, path, nil) do
-    message = "Attempting to #{method} #{path}, but no sandbox-id in headers, sent 400"
+    message = "Attempting to #{method} #{path}, but no sandbox in headers, sent 400"
     Logger.error(message)
-    conn |> Conn.send_resp(400, "Provide a valid sandbox-id header") |> Conn.halt()
+    conn |> Conn.send_resp(400, "Provide a valid sandbox header") |> Conn.halt()
   end
 
   defp ensure_sandbox_id(conn, method, path, sandbox_id) do
-    Logger.warn("#{method} #{path}, sandbox-id: #{sandbox_id || "none"}")
+    Logger.warn("#{method} #{path}, sandbox: #{sandbox_id || "none"}")
     conn
   end
 end
