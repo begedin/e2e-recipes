@@ -9,7 +9,11 @@ type TodoItemProps = {
   todo: Todo
 }
 
-const handleClick = (e: React.MouseEvent<HTMLButtonElement>, dispatch: AppDispatch, todo: Todo)  =>{
+const handleClick = (
+  e: React.MouseEvent<HTMLButtonElement>,
+  dispatch: AppDispatch,
+  todo: Todo
+) => {
   e.preventDefault()
   dispatch(deleteTodo(todo))
 }
@@ -18,10 +22,10 @@ class TodoItem extends Component<TodoItemProps> {
   render() {
     const { dispatch, todo } = this.props
     return (
-      <div>
+      <div className="todo">
         <div>{todo.title}</div>
-        <button onClick={(e) => handleClick(e, dispatch, todo)}>Delete</button>
-      </div>    
+        <button onClick={e => handleClick(e, dispatch, todo)}>Delete</button>
+      </div>
     )
   }
 }

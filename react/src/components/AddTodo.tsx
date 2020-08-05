@@ -9,14 +9,15 @@ type AddTodoProps = {
 }
 
 type AddTodoState = {
-    title: string
+  title: string
 }
 
-const submit = (vm: AddTodo, event: React.FormEvent<HTMLFormElement>) => {
+const submit = async (vm: AddTodo, event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault()
   const { dispatch } = vm.props
   const { title } = vm.state
-  dispatch(createTodo(title))
+  await dispatch(createTodo(title))
+  vm.setState({ title: '' })
 }
 
 class AddTodo extends Component<AddTodoProps, AddTodoState> {
@@ -32,9 +33,10 @@ class AddTodo extends Component<AddTodoProps, AddTodoState> {
           <input
             type="text"
             onChange={e => this.setState({ title: e.currentTarget.value })}
+            value={this.state.title}
           />
         </label>
-        
+
         <button type="submit">Create ToDo</button>
       </form>
     )

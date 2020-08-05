@@ -73,20 +73,21 @@ export const addTodo = (todo: Todo): AddTodoAction => ({
   todo
 })
 
-export const createTodo: AppThunk<void, string> = (title: string) => async (
-  dispatch
-) => {
+export const createTodo: AppThunk<void, string> = (
+  title: string
+) => async dispatch => {
   const { data: todo } = await post('todos', { todo: { title } })
   dispatch(addTodo(todo))
 }
 
 export const removeTodo = (todo: Todo): RemoveTodoAction => ({
-  type: REMOVE_TODO
+  type: REMOVE_TODO,
+  todo
 })
 
-export const deleteTodo: AppThunk<void, Todo> = (todo: Todo) => async (
-  dispatch
-) => {
+export const deleteTodo: AppThunk<void, Todo> = (
+  todo: Todo
+) => async dispatch => {
   await remove(`todos/${todo.id}`)
   dispatch(removeTodo(todo))
 }

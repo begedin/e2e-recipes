@@ -38,7 +38,7 @@ export type ReceiveRegisterAction = Action<typeof RECEIVE_REGISTER> & {
 }
 
 export type AddTodoAction = Action<typeof ADD_TODO> & { todo: Todo }
-export type RemoveTodoAction = Action<typeof REMOVE_TODO>
+export type RemoveTodoAction = Action<typeof REMOVE_TODO> & { todo: Todo }
 export type RequestTodosAction = Action<typeof REQUEST_TODOS>
 export type ReceiveTodosAction = Action<typeof RECEIVE_TODOS> & {
   todos: Todo[]

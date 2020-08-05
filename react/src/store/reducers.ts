@@ -5,7 +5,8 @@ import {
   RECEIVE_TODOS,
   ADD_TODO,
   RECEIVE_REGISTER,
-  LOGOUT
+  LOGOUT,
+  REMOVE_TODO
 } from './actionTypes'
 
 const initialState = (): RootState => ({
@@ -18,6 +19,11 @@ const rootReducer = (state: RootState = initialState(), action: AppAction) => {
   switch (action.type) {
     case ADD_TODO:
       return Object.assign({}, state, { todos: [...state.todos, action.todo] })
+    case REMOVE_TODO:
+      const index = state.todos.findIndex(t => t.id === action.todo.id)
+      return index > -1
+        ? Object.assign({}, state, { todos: [...state.todos.splice(index, 1)] })
+        : state
     case REQUEST_TODOS:
       return Object.assign({}, state, { isFetching: true })
     case RECEIVE_TODOS:
