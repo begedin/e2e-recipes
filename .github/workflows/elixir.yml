@@ -66,7 +66,7 @@ jobs:
     - name: Run Vue E2E tests
       uses: cypress-io/github-action@v2
       with: 
-        working_directory: vue
+        working-directory: vue
         project: vue
         start: (cd ../phoenix; MIX_ENV=e2e mix phx.server&) && npm run serve
         command: npm run test:e2e        
