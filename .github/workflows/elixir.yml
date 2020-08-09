@@ -8,8 +8,6 @@ on:
 
 jobs:
   build:
-    env: 
-      working-directory: phoenix
 
     name: Build and test
     runs-on: ubuntu-latest
@@ -17,18 +15,21 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+      
     - name: Set up Elixir
       uses: actions/setup-elixir@v1
       with:
         elixir-version: '1.10.3' # Define the elixir version [required]
         otp-version: '22.3' # Define the OTP version [required]
-    - name: Restore dependencies cache
+    - name: Switch to phoenix
+      run: cd phoenix
+    - name: Restore elixir dependencies cache
       uses: actions/cache@v2
       with:
         path: deps
         key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
         restore-keys: ${{ runner.os }}-mix-
-    - name: Install dependencies
+    - name: Install elixir dependencies
       run: mix deps.get
     - name: Run elixir tests
       run: mix test
@@ -36,17 +37,30 @@ jobs:
       run: |
         MIX_ENV=e2e mix do ecto.reset
         MIX_ENV=e2e mix phx.server
+        
+    - name: Switch to Vue
+      run: cd ../vue
+    - name: Restore Vue dependencies cache
+      uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-mix-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: ${{ runner.os }}-npm-vue-
+    - name: Install vue dependencies
+      run: npm i
     - name: Run Vue E2E tests
       run: |
-        cd ../vue
-        npm i
         npm run serve
         npm run test:e2e
-    - name: Init react
-      run: | 
-        cd ../react
-        npm i
-        npm start
+        
+    - name: Switch to react
+      run: cd ../react
+    - name: Restore React dependencies cache
+      uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-mix-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: ${{ runner.os }}-npm-react-
     - name: Run React E2E tests
       uses: DevExpress/testcafe-action@latest
       with:
