@@ -3,8 +3,8 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { logout } from '../store/actions'
-import { RootState, AppDispatch } from '../store/types'
+import { logout } from 'store/actions'
+import { RootState, AppDispatch } from 'store/types'
 
 type Props = { authenticated: boolean; dispatch: AppDispatch }
 

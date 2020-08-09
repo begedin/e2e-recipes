@@ -1,23 +1,24 @@
 import { RequestHook } from 'testcafe'
+
 import { axiosInstance, sandboxAxiosInstance } from './api'
 
 class SandboxRequestHook extends RequestHook {
   sandboxId?: string
 
-  onRequest(event) {
+  async onRequest(event: any) {
     const { sandboxId } = this
     if (sandboxId) {
-      event.requestOptions.headers['sandbox'] = sandboxId
+      event.requestOptions.headers.sandbox = sandboxId
     }
 
     return event
   }
-  onResponse() {
-    return null
+  async onResponse() {
+    return Promise.resolve()
   }
 }
 
-export async function initSandbox(t) {
+export async function initSandbox(t: TestController) {
   const { data: sandboxId } = await axiosInstance().post('sandbox')
   const hook = new SandboxRequestHook()
   hook.sandboxId = sandboxId
@@ -27,7 +28,7 @@ export async function initSandbox(t) {
   return sandboxId
 }
 
-export async function checkinSandbox(t) {
+export async function checkinSandbox(t: TestController) {
   const { sandboxId } = t.ctx
   return sandboxAxiosInstance(sandboxId).delete('sandbox')
 }

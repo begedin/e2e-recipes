@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { createTodo } from '../store/actions'
-import { AppDispatch } from '../store/types'
+import { createTodo } from 'store/actions'
+import { AppDispatch } from 'store/types'
 
 type AddTodoProps = {
   dispatch: AppDispatch

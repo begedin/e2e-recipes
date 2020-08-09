@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { register, login } from '../store/actions'
-import { AppDispatch } from '../store/types'
+import { register, login } from 'store/actions'
+import { AppDispatch } from 'store/types'
 
 type RegisterProps = {
   dispatch: AppDispatch

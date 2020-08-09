@@ -9,20 +9,20 @@
     "noUnusedLocals": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
     "lib": [
       "esnext",
       "dom",
       "dom.iterable",
       "scripthost"
-    ]
+    ],
+    "baseUrl": ".",
   },
   "include": [
     "**/*.ts",
     "*.ts"
   ],
   "exclude": [
-    "../node_modules",
-    "../src"
+    "node_modules",
+    "src"
   ]
 }

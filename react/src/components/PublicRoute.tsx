@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
-import { RootState } from '../store/types'
 import { Route, Redirect, RouteProps } from 'react-router-dom'
+
+import { RootState } from 'store/types'
 
 type Props = RouteProps & { authenticated: boolean }
 
