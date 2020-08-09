@@ -55,11 +55,8 @@ jobs:
         cd phoenix
         mix test
         
-    - name: Start backend in E2E Env
-      run: |
-        cd phoenix
-        MIX_ENV=e2e mix do ecto.reset
-        MIX_ENV=e2e mix phx.server
+    - name: Build backend in E2E Env
+      run: cd phoenix && MIX_ENV=e2e mix do ecto.reset
         
     - name: Install vue dependencies
       run: |
@@ -67,10 +64,12 @@ jobs:
         npm i
         
     - name: Run Vue E2E tests
-      run: |
-        cd vue
-        npm run serve
-        npm run test:e2e
+      uses: cypress-io/github-action@v2
+      with: 
+        working_directory: vue
+        project: vue
+        start: (cd ../phoenix; MIX_ENV=e2e mix phx.server&) && npm run serve
+        command: npm run test:e2e        
         
     - name: Run React E2E tests
       run: |
