@@ -10,15 +10,23 @@ jobs:
   build_and_test: 
     name: Build and test everything
     runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:11
+        ports: ['5432:5432']
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+           
     steps:
     - name: Checkout
       uses: actions/checkout@v2
     
-    - name: Setup PostgreSQL
-      uses: Harmon758/postgresql-action@v1.0.0
-      with:
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
+
              
     - name: Set up Elixir
       uses: actions/setup-elixir@v1
