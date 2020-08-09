@@ -16,7 +16,10 @@ jobs:
     
     - name: Setup PostgreSQL
       uses: Harmon758/postgresql-action@v1.0.0
-      
+      with:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+             
     - name: Set up Elixir
       uses: actions/setup-elixir@v1
       with:
