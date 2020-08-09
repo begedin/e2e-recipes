@@ -13,44 +13,55 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    
+    - name: Setup PostgreSQL
+      uses: Harmon758/postgresql-action@v1.0.0
       
     - name: Set up Elixir
       uses: actions/setup-elixir@v1
       with:
         elixir-version: '1.10.3' # Define the elixir version [required]
         otp-version: '22.3' # Define the OTP version [required]
+        
     - name: Setup node
       uses: actions/setup-node@v2.1.1
       with: 
         node-version: 12.8.0   
+
     - name: Restore elixir dependencies cache
       uses: actions/cache@v2
       with:
         path: phoenix/deps vue/node_modules react/node_modules
         key: ${{ runner.os }}-mix-${{ hashFiles('phoenix/mix.lock', 'vue/package-lock.json', 'react/package-lock.json') }}
         restore-keys: ${{ runner.os }}-cache-
+        
     - name: Install elixir dependencies
       run: |
         cd phoenix
         mix deps.get
+        
     - name: Run elixir tests
       run: |
         cd phoenix
         mix test
+        
     - name: Start backend in E2E Env
       run: |
         cd phoenix
         MIX_ENV=e2e mix do ecto.reset
         MIX_ENV=e2e mix phx.server
+        
     - name: Install vue dependencies
       run: |
         cd vue
         npm i
+        
     - name: Run Vue E2E tests
       run: |
         cd vue
         npm run serve
         npm run test:e2e
+        
     - name: Run React E2E tests
       run: |
         cd vue
