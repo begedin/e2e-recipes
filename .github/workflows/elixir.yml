@@ -68,7 +68,7 @@ jobs:
       with: 
         working-directory: vue
         project: vue
-        start: (cd ../phoenix; MIX_ENV=e2e mix phx.server&) && npm run serve
+        start: npm run serve:e2e
         command: npm run test:e2e        
         
     - name: Run React E2E tests
