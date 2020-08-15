@@ -4,7 +4,7 @@ import { fetchTodos } from '../store/actions'
 import { AppDispatch, Todo, RootState } from '../store/types'
 import AddTodo from '../components/AddTodo'
 import TodoItem from '../components/TodoItem'
-import { V4MAPPED } from 'dns'
+
 type TodoProps = { dispatch: AppDispatch; todos: Todo[] }
 
 class Todos extends Component<TodoProps> {
