@@ -9,14 +9,17 @@ describe('Login', () => {
       cy.login(user);
     });
 
+    cy.url().should('not.contain', 'login');
+
     cy.contains('Buy Milk');
     cy.contains('Write Homework');
   });
 
   it('creates todos', () => {
-    cy.create('user', {}).then(user => {
-      cy.login(user);
-    });
+    cy.create('user', {})
+      .then(user => cy.login(user));
+
+    cy.url().should('not.contain', 'login');
 
     cy.get('input[type=text]').clear().type('Go run!');
     cy.get('button[type=submit]').click();
@@ -37,6 +40,9 @@ describe('Login', () => {
       cy.create('todo', { user, title: 'Write Homework' });
       cy.login(user);
     });
+
+    cy.url().should('not.contain', 'login');
+
     cy.contains('Buy Milk');
     cy.contains('Write Homework');
     cy.get('button:eq(0)').click();

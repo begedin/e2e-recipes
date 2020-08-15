@@ -20,9 +20,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:backend": "(cd ../phoenix; MIX_ENV=e2e mix phx.server)",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test:e2e:ci": "(npm run start:backend & npm run test:e2e && kill $(lsof -t -i:4000))",
+    "test:e2e": "testcafe firefox:headless test/e2e/fixtures --app 'BROWSER=none npm run start'"
   },
   "eslintConfig": {
     "extends": "react-app",
