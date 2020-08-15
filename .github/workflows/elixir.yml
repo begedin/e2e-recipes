@@ -50,11 +50,11 @@ jobs:
         cd phoenix
         mix deps.get
         
-    - name: Run elixir tests
-      run: |
-        cd phoenix
-        mix test
-        
+    #- name: Run elixir tests
+    #  run: |
+    #    cd phoenix
+    #    mix test
+    #    
     - name: Build backend in E2E Env
       run: cd phoenix && MIX_ENV=e2e mix do ecto.reset
         
