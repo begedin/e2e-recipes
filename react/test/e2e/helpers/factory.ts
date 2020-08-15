@@ -23,7 +23,7 @@ class Factory {
    * @param {String} schema The type of record to create on the backend
    * @param {Object | Array<Object>} attributes
    */
-  async create(schema, attributes = {}) {
+  async create(schema: string, attributes: object = {}) {
     const { data } = await this.api.post('/factory', { schema, attributes })
     return data
   }
@@ -41,7 +41,7 @@ class Factory {
    * @param {Integer} count Amount of records to create
    * @param {Object} attributes Attributes the records will share
    */
-  async createList(schema, count, attributes = {}) {
+  async createList(schema: string, count: number, attributes: object = {}) {
     const { data } = await this.api.post('/factory', {
       schema,
       count,
@@ -51,6 +51,6 @@ class Factory {
   }
 }
 
-export function createFactory(sandboxId) {
+export function createFactory(sandboxId: string) {
   return new Factory(sandboxId)
 }

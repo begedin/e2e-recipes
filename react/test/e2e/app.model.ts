@@ -1,4 +1,5 @@
 import { Selector, ClientFunction } from 'testcafe'
+
 import { baseUrl } from './config'
 
 export default class AppModel {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { login } from '../store/actions'
-import { AppDispatch, RootState } from '../store/types'
+import { login } from 'store/actions'
+import { AppDispatch, RootState } from 'store/types'
 
 type LoginProps = {
   authenticated: boolean

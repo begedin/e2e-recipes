@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { deleteTodo } from '../store/actions'
-import { AppDispatch, Todo } from '../store/types'
+import { deleteTodo } from 'store/actions'
+import { AppDispatch, Todo } from 'store/types'
 
 type TodoItemProps = {
   dispatch: AppDispatch

@@ -33,8 +33,12 @@ export const receiveLogin = (token: string): ReceiveLoginAction => ({
 
 export const login: AppThunk<void, User> = (login: User) => async dispatch => {
   dispatch(requestLogin)
-  const { data: token } = await post<string>('login', { login })
-  dispatch(receiveLogin(token))
+  try {
+    const { data: token } = await post<string>('login', { login })
+    dispatch(receiveLogin(token))
+  } catch (e) {
+    // TODO: Set error
+  }
 }
 
 export const logout = (): LogoutAction => ({ type: LOGOUT })

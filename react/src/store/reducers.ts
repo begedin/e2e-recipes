@@ -20,10 +20,8 @@ const rootReducer = (state: RootState = initialState(), action: AppAction) => {
     case ADD_TODO:
       return Object.assign({}, state, { todos: [...state.todos, action.todo] })
     case REMOVE_TODO:
-      const index = state.todos.findIndex(t => t.id === action.todo.id)
-      return index > -1
-        ? Object.assign({}, state, { todos: [...state.todos.splice(index, 1)] })
-        : state
+      const newTodos = state.todos.filter(t => t.id !== action.todo.id)
+      return Object.assign({}, state, { todos: newTodos })
     case REQUEST_TODOS:
       return Object.assign({}, state, { isFetching: true })
     case RECEIVE_TODOS:

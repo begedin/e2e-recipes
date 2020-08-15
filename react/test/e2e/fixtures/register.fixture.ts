@@ -1,6 +1,7 @@
-import { initSandbox, checkinSandbox } from '../helpers/sandbox'
-import { createFactory } from '../helpers/factory'
 import AppModel from '../app.model'
+
+import { createFactory } from '../helpers/factory'
+import { initSandbox, checkinSandbox } from '../helpers/sandbox'
 
 const app = new AppModel()
 
@@ -12,7 +13,7 @@ fixture('register')
   })
   .afterEach(async t => checkinSandbox(t))
 
-test('Registering as new user', async t => {
+test('Registers user', async t => {
   await t
     .click(app.navigation.register)
     .typeText(app.register.nameField, 'Joe')
