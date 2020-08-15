@@ -73,8 +73,8 @@ jobs:
         
     - name: Run React E2E tests
       run: |
-        cd vue
-        npx testcafe firefox tests/e2e/fixtures
+        cd react
+        npx testcafe firefox:headless tests/e2e/fixtures
         
 
       
