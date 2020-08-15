@@ -69,8 +69,7 @@ jobs:
         working-directory: vue
         project: vue
         start: npm run serve:e2e
-        command: npm run test:e2e
-        wait-on: 'http://localhost:8080'        
+        command: npm run test:e2e       
         
     - name: Run React E2E tests
       run: |
