@@ -74,7 +74,7 @@ jobs:
     - name: Run React E2E tests
       run: |
         cd react
-        npx testcafe firefox:headless tests/e2e/fixtures
+        npm run test:e2e
         
 
       
