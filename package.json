@@ -1,0 +1,25 @@
+{
+  "name": "e2e-recipes",
+  "version": "0.0.1",
+  "description": "Collection of e2e testing recipes",
+  "main": "index.js",
+  "scripts": {
+    "test:e2e:vue": "(cd vue; npm run serve:e2e & npm run test:e2e:ci)",
+    "test:e2e:react": "(cd react; npm run test:e2e:ci)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bego-talks/e2e.git"
+  },
+  "keywords": [
+    "e2e",
+    "test",
+    "recipe"
+  ],
+  "author": "Nikola Begedin (begedinnikola@gmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bego-talks/e2e/issues"
+  },
+  "homepage": "https://github.com/bego-talks/e2e#readme"
+}
