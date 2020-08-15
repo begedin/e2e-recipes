@@ -9,7 +9,7 @@ on:
 jobs:
   build_and_test: 
     name: Build and test everything
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
     services:
       db:
         image: postgres:11
@@ -58,10 +58,10 @@ jobs:
     - name: Build backend in E2E Env
       run: cd phoenix && MIX_ENV=e2e mix do ecto.reset
         
-    - name: Install vue dependencies
-      run: |
-        cd vue
-        npm i
+    #- name: Install vue dependencies
+    #  run: |
+    #    cd vue
+    #    npm i
         
     - name: Run Vue E2E tests
       uses: cypress-io/github-action@v2
