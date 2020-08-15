@@ -4,8 +4,10 @@
   "description": "Collection of e2e testing recipes",
   "main": "index.js",
   "scripts": {
-    "test:e2e:vue": "(cd vue; npm run serve:e2e & npm run test:e2e:ci)",
-    "test:e2e:react": "(cd react; npm run test:e2e:ci)"
+    "test:e2e:ci:vue": "(cd vue; npm run serve:e2e & npm run test:e2e:ci)",
+    "test:e2e:vue": "(cd vue; npm run serve:e2e & npm run test:e2e)",
+    "test:e2e:ci:react": "(cd react; npm run test:e2e:ci)",
+    "test:e2e:react": "(cd react; npm run test:e2e)"
   },
   "repository": {
     "type": "git",
