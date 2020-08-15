@@ -9,19 +9,21 @@ For the phoenix backend, move into /phoenix
 
 # Vue
 
-For the Vue app, move into /vue
+Run e2e tests from root path with `npm run test:e2e:vue` or `npm run test:e2e:ci:vue`
+
+For additional actions, move into /vue
 
   * Install dependencies with `npm install`
   * Compile and hot-reload for dev with `npm run serve`
   * Compile and minify for production with `npm run build`
   * Run unit tests with `npm run test:unit`
-  * Run e2e tests with `npm run test:e2e`
   * Lint and auto-fix with `npm run lint`
   
 # React
 
-For the React app, move into /react
+Run e2e tests from root path with `npm run test:e2e:react` or `npm run test:e2e:ci:react`
+
+For additional actions, move into /react
 
   * Install dependencies with `npm install`
   * Compile and hot-reload for dev with `npm start`
-  * In a separate tab, run e2e tests with `npx testcafe e2e/fixtures`
