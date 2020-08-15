@@ -24,7 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test:e2e:hadless": "testcafe firefox:headless test/e2e/fixtures --app 'BROWSER=none npm run start'",
+    "test:e2e:headless": "testcafe firefox:headless test/e2e/fixtures --app 'BROWSER=none npm run start'",
     "test:e2e:basic": "testcafe firefox test/e2e/fixtures --app 'BROWSER=none npm run start'",
     "test:e2e:ci": "(npm run start:backend & npm run test:e2e:headless && kill $(lsof -t -i:4000))",
     "test:e2e": "(npm run start:backend & npm run test:e2e:basic && kill $(lsof -t -i:4000))"
