@@ -74,6 +74,7 @@ jobs:
     - name: Run React E2E tests
       run: |
         cd react
+        npm i
         npm run test:e2e:ci
         
 
