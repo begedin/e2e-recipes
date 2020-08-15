@@ -8,7 +8,7 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
-    "test:e2e:ci": "vue-cli-service test:e2e --headless",
+    "test:e2e:ci": "vue-cli-service test:e2e --headless && kill $(lsof -t -i:4000))",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
