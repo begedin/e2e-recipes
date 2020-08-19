@@ -63,7 +63,11 @@ defmodule E2EWeb.TodoControllerTest do
 
     test "deletes chosen todo", %{conn: conn, todo: todo} do
       conn = delete(conn, Routes.todo_path(conn, :delete, todo))
-      assert response(conn, 204)
+
+      assert %{
+               "id" => todo.id,
+               "title" => todo.title
+             } = json_response(conn, 200)["data"]
 
       assert_error_sent(404, fn ->
         get(conn, Routes.todo_path(conn, :show, todo))

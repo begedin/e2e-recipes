@@ -4,7 +4,7 @@ defmodule E2EWeb.TodoController do
   alias E2E.Todos
   alias E2E.Todos.Todo
 
-  action_fallback E2EWeb.FallbackController
+  action_fallback(E2EWeb.FallbackController)
 
   def index(conn, _params) do
     todos = Todos.list_todos()
@@ -36,8 +36,8 @@ defmodule E2EWeb.TodoController do
   def delete(conn, %{"id" => id}) do
     todo = Todos.get_todo!(id)
 
-    with {:ok, %Todo{}} <- Todos.delete_todo(todo) do
-      send_resp(conn, :no_content, "")
+    with {:ok, %Todo{} = todo} <- Todos.delete_todo(todo) do
+      render(conn, "show.json", todo: todo)
     end
   end
 end
