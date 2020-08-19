@@ -69,11 +69,11 @@ jobs:
         npm run test:e2e:ci
 
     - name: Run Vue E2E tests
-      uses: cypress-io/github-action@v2
-      with: 
-        working-directory: vue
-        project: vue
-        command: npm run test:e2e:ci  
+      run: |
+        cd vue
+        npm i
+        npm run test:e2e:ci
+
         
 
       
