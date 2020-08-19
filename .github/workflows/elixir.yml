@@ -73,7 +73,6 @@ jobs:
       with: 
         working-directory: vue
         project: vue
-        start: npm run serve:e2e
         command: npm run test:e2e:ci  
         
 
