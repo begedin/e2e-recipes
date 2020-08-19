@@ -20,8 +20,6 @@ defmodule E2E.E2EPlug do
       db_schema = String.to_atom(schema)
       db_attrs = atomize(attrs)
 
-      IO.inspect({db_schema, db_attrs})
-
       rendered =
         db_schema
         |> create(db_attrs, Map.get(conn.body_params, "count"))
