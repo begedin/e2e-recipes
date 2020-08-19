@@ -6,6 +6,7 @@
   "scripts": {
     "start:phoenix": "(cd phoenix; mix phx.server)",
     "start:angular": "(cd angular; ng serve --open)",
+    "test:phoenix": "(cd phoenix; mix test)",
     "test:e2e:angular": "(cd angular; npm run test:e2e)",
     "test:e2e:ci:angular": "(cd angular; npm run test:e2e:ci)",
     "test:e2e:ci:vue": "(cd vue; npm run test:e2e:ci)",

@@ -3,6 +3,7 @@
 ## Backend
 
 * To start phoenix backend, run `npm run start:phoenix` from root
+* To run phoenix unit tests, run `npm run test:phoenix` from root
 
 For additional actions, move into /phoenix
 
