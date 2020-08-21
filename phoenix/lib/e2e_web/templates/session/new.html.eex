@@ -1,0 +1,11 @@
+<%= form_for @changeset, Routes.session_path(@conn, :create), fn f -> %>
+  <label>
+    Name: <%= text_input f, :name %>
+  </label>
+
+  <label>
+    Password: <%= password_input f, :password %>
+  </label>
+
+  <%= submit "Login" %>
+<% end %>

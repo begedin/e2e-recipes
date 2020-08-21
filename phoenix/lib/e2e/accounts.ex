@@ -3,10 +3,7 @@ defmodule E2E.Accounts do
   The Accounts context.
   """
 
-  import Ecto.Query, warn: false
-  alias E2E.Repo
-
-  alias E2E.Accounts.User
+  alias E2E.{Accounts, Repo}
 
   @doc """
   Returns the list of users.
@@ -18,7 +15,7 @@ defmodule E2E.Accounts do
 
   """
   def list_users do
-    Repo.all(User)
+    Repo.all(Accounts.User)
   end
 
   @doc """
@@ -35,7 +32,7 @@ defmodule E2E.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id), do: Repo.get!(Accounts.User, id)
 
   @doc """
   Creates a user.
@@ -50,9 +47,13 @@ defmodule E2E.Accounts do
 
   """
   def create_user(attrs \\ %{}) do
-    %User{}
-    |> User.changeset(attrs)
+    %Accounts.User{}
+    |> Accounts.User.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def new_user() do
+    %Accounts.User{} |> Ecto.Changeset.change()
   end
 
   @doc """
@@ -67,9 +68,9 @@ defmodule E2E.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_user(%User{} = user, attrs) do
+  def update_user(%Accounts.User{} = user, attrs) do
     user
-    |> User.changeset(attrs)
+    |> Accounts.User.changeset(attrs)
     |> Repo.update()
   end
 
@@ -85,16 +86,23 @@ defmodule E2E.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_user(%User{} = user) do
+  def delete_user(%Accounts.User{} = user) do
     Repo.delete(user)
   end
 
   def login(%{"name" => name, "password" => password}) do
-    case User |> Repo.get_by(name: name, password: password) do
-      nil -> {:error, :login_invalid}
-      %User{id: id} -> {:ok, Phoenix.Token.sign(E2EWeb.Endpoint, "secret", %{id: id})}
+    case Accounts.User |> Repo.get_by(name: name, password: password) do
+      nil ->
+        {:error, :login_invalid}
+
+      %Accounts.User{id: id} ->
+        {:ok, Phoenix.Token.sign(E2EWeb.Endpoint, "secret", %{id: id})}
     end
   end
 
   def login(_), do: {:error, :login_invalid}
+
+  def verify_token(token) do
+    Phoenix.Token.verify(E2EWeb.Endpoint, "secret", token, max_age: 24 * 3600)
+  end
 end
