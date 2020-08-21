@@ -67,10 +67,21 @@ defmodule E2E.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"],
-      integration: ["ecto.create --quiet", "ecto.migrate", "test --include integration"],
-      ci: ["ecto.create --quiet", "ecto.migrate", "cmd 'CI=true mix test --include integration'"],
+      integration: [
+        "frontend build",
+        "ecto.create --quiet",
+        "ecto.migrate",
+        "test --include integration"
+      ],
+      ci: [
+        "frontend build",
+        "ecto.create --quiet",
+        "ecto.migrate",
+        "cmd 'CI=true mix test --include integration'"
+      ],
       "e2e.server": ["phx.server"],
-      "e2e.reset": ["ecto.reset"]
+      "e2e.reset": ["ecto.reset"],
+      frontend: [~s[cmd "cd assets; npm run $!"]]
     ]
   end
 end
