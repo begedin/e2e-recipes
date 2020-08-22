@@ -14,7 +14,7 @@ defmodule E2EWeb.API.TodoControllerTest do
 
   defp authenticate(conn, user) do
     {:ok, token} = Accounts.login(%{"name" => user.name, "password" => user.password})
-    conn |> put_req_header("authorization", token)
+    conn |> put_req_header("authorization", "Bearer #{token}")
   end
 
   describe "index" do

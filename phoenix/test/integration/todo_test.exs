@@ -5,6 +5,8 @@ defmodule E2E.Integration.TodoTest do
   import E2E.Factory
   alias E2E.{Repo, Todos}
 
+  @moduletag :integration
+
   defp login(session, name, password) do
     session
     |> visit("/")

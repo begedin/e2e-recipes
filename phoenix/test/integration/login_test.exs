@@ -4,6 +4,8 @@ defmodule E2E.Integration.LoginTest do
   use E2E.E2ECase
   import E2E.Factory
 
+  @moduletag :integration
+
   feature "signs up with correct credentials", %{session: session} do
     user = insert(:user)
 

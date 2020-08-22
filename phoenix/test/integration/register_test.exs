@@ -5,6 +5,8 @@ defmodule E2E.Integration.RegisterTest do
 
   alias E2E.{Accounts, Repo}
 
+  @moduletag :integration
+
   feature "registers account", %{session: session} do
     session
     |> visit("/")

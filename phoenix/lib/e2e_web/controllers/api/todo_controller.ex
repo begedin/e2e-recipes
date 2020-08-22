@@ -8,11 +8,10 @@ defmodule E2EWeb.API.TodoController do
 
   action_fallback(E2EWeb.FallbackController)
 
-  plug :authentication
+  plug(:authentication)
 
   defp authentication(conn, []) do
-    with token when is_binary(token) <-
-           conn |> Plug.Conn.get_req_header("authorization") |> List.first(),
+    with "Bearer " <> token <- conn |> Plug.Conn.get_req_header("authorization") |> List.first(),
          {:ok, %{id: id}} <- Accounts.verify_token(token),
          user <- Accounts.get_user!(id) do
       assign(conn, :user, user)
