@@ -3,7 +3,7 @@ defmodule E2E.Todos do
   The Todos context.
   """
 
-  import Ecto.Query, only: [where: 2]
+  import Ecto.Query, only: [order_by: 2, where: 2]
 
   alias E2E.{Accounts, Repo, Todos}
   alias Ecto.Changeset
@@ -18,7 +18,7 @@ defmodule E2E.Todos do
 
   """
   def list_todos(%Accounts.User{} = user) do
-    Todos.Todo |> where(user_id: ^user.id) |> Repo.all()
+    Todos.Todo |> where(user_id: ^user.id) |> order_by(asc: :id) |> Repo.all()
   end
 
   @doc """
