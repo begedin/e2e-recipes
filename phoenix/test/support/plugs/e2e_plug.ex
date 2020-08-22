@@ -33,7 +33,7 @@ defmodule E2E.E2EPlug do
 
   def call(%Conn{} = conn, []), do: conn
 
-  @spec create(String.t(), list(map) | map, nil | integer) :: struct | list(struct)
+  @spec create(atom, list(map) | map, nil | integer) :: struct | list(struct)
   def create(schema, attrs, nil) when is_list(attrs) do
     Enum.map(attrs, &create(schema, &1, nil))
   end

@@ -28,8 +28,8 @@ jobs:
     - name: Set up Elixir
       uses: actions/setup-elixir@v1
       with:
-        elixir-version: '1.10.3' # Define the elixir version [required]
-        otp-version: '22.3' # Define the OTP version [required]
+        elixir-version: '1.10.4' # Define the elixir version [required]
+        otp-version: '23.0' # Define the OTP version [required]
         
     - name: Setup node
       uses: actions/setup-node@v2.1.1
@@ -39,19 +39,20 @@ jobs:
     - name: Restore elixir dependencies cache
       uses: actions/cache@v2
       with:
-        path: phoenix/deps angular/node_modules vue/node_modules react/node_modules
-        key: ${{ runner.os }}-mix-${{ hashFiles('phoenix/mix.lock', 'angular/package-lock.json', 'vue/package-lock.json', 'react/package-lock.json') }}
+        path: phoenix/deps phoenix/assets/node_modules angular/node_modules vue/node_modules react/node_modules
+        key: ${{ runner.os }}-mix-${{ hashFiles('phoenix/mix.lock', 'phoenix/assets/package-lock.json', 'angular/package-lock.json', 'vue/package-lock.json', 'react/package-lock.json') }}
         restore-keys: ${{ runner.os }}-cache-
         
     - name: Install elixir dependencies
       run: |
         cd phoenix
+        (cd assets; npm i)
         mix deps.get
         
     - name: Run elixir tests
       run: |
         cd phoenix
-        mix test
+        mix ci
         
     - name: Build backend in E2E Env
       run: cd phoenix && MIX_ENV=e2e mix do ecto.reset  

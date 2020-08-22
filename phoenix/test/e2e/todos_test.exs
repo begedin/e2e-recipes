@@ -4,61 +4,56 @@ defmodule E2E.TodosTest do
   alias E2E.Todos
 
   describe "todos" do
-    alias E2E.Todos.Todo
-
     @valid_attrs %{title: "some title"}
-    @update_attrs %{title: "some updated title"}
     @invalid_attrs %{title: nil}
 
-    def todo_fixture(attrs \\ %{}) do
-      {:ok, todo} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Todos.create_todo()
-
-      todo
+    test "list_todos/1 returns all todos for user" do
+      user = insert(:user)
+      [todo_1, todo_2] = insert_pair(:todo, user: user)
+      todo_3 = insert(:todo)
+      assert [_, _] = todos = Todos.list_todos(user)
+      assert todo_1.id in Enum.map(todos, & &1.id)
+      assert todo_2.id in Enum.map(todos, & &1.id)
+      refute todo_3.id in Enum.map(todos, & &1.id)
     end
 
-    test "list_todos/0 returns all todos" do
-      todo = todo_fixture()
-      assert Todos.list_todos() == [todo]
+    test "get_todo/2 returns the todo with given id for user" do
+      %{user: user} = todo = insert(:todo)
+      assert {:ok, _todo} = Todos.get_todo(user, todo.id)
     end
 
-    test "get_todo!/1 returns the todo with given id" do
-      todo = todo_fixture()
-      assert Todos.get_todo!(todo.id) == todo
+    test "get_todo/2 returns error if given id does not belong to user" do
+      user = insert(:user)
+      todo = insert(:todo)
+      assert {:error, :not_found} = Todos.get_todo(user, todo.id)
     end
 
-    test "create_todo/1 with valid data creates a todo" do
-      assert {:ok, %Todo{} = todo} = Todos.create_todo(@valid_attrs)
-      assert todo.title == "some title"
+    test "get_todo/2 returns error if incorrect id" do
+      user = insert(:user)
+      assert {:error, :not_found} = Todos.get_todo(user, -1)
     end
 
-    test "create_todo/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Todos.create_todo(@invalid_attrs)
+    test "create_todo/2 with valid data creates a todo" do
+      user = insert(:user)
+      assert {:ok, todo} = Todos.create_todo(user, @valid_attrs)
+      assert todo.title === "some title"
+      assert todo.user_id === user.id
     end
 
-    test "update_todo/2 with valid data updates the todo" do
-      todo = todo_fixture()
-      assert {:ok, %Todo{} = todo} = Todos.update_todo(todo, @update_attrs)
-      assert todo.title == "some updated title"
+    test "create_todo/2 with invalid data returns error changeset" do
+      user = insert(:user)
+      assert {:error, %{valid?: false}} = Todos.create_todo(user, @invalid_attrs)
     end
 
-    test "update_todo/2 with invalid data returns error changeset" do
-      todo = todo_fixture()
-      assert {:error, %Ecto.Changeset{}} = Todos.update_todo(todo, @invalid_attrs)
-      assert todo == Todos.get_todo!(todo.id)
+    test "delete_todo/1 deletes todo" do
+      todo = insert(:todo)
+      assert {:ok, _todo} = Todos.delete_todo(todo)
+      refute Repo.get(Todos.Todo, todo.id)
     end
 
-    test "delete_todo/1 deletes the todo" do
-      todo = todo_fixture()
-      assert {:ok, %Todo{}} = Todos.delete_todo(todo)
-      assert_raise Ecto.NoResultsError, fn -> Todos.get_todo!(todo.id) end
-    end
-
-    test "change_todo/1 returns a todo changeset" do
-      todo = todo_fixture()
-      assert %Ecto.Changeset{} = Todos.change_todo(todo)
+    test "new_todo/1 returns a todo changeset" do
+      user = insert(:user)
+      assert %Ecto.Changeset{} = Todos.new_todo(user)
     end
   end
 end

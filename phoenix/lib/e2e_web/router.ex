@@ -16,10 +16,18 @@ defmodule E2EWeb.Router do
   scope "/", E2EWeb do
     pipe_through(:browser)
 
-    get("/", PageController, :index)
+    get("/", TodoController, :index)
+    post("/todos", TodoController, :create)
+    delete("/todos/:id", TodoController, :delete)
+
+    get("/login", SessionController, :new)
+    post("/login", SessionController, :create)
+    delete("/login", SessionController, :delete)
+    get("/register", UserController, :new)
+    post("/register", UserController, :create)
   end
 
-  scope "/api/", E2EWeb do
+  scope "/api/", E2EWeb.API, as: :api do
     pipe_through(:api)
 
     post("/login", TokenController, :login)
@@ -32,8 +40,6 @@ defmodule E2EWeb.Router do
 
     get("/todos", TodoController, :index)
     post("/todos", TodoController, :create)
-    get("/todos/:id", TodoController, :show)
-    put("/todos/:id", TodoController, :update)
     delete("/todos/:id", TodoController, :delete)
   end
 end

@@ -5,13 +5,15 @@ defmodule E2E.MixProject do
     [
       app: :e2e,
       version: "0.1.0",
-      elixir: "~> 1.10.0-rc.0",
+      elixir: "~> 1.10.4",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
       preferred_cli_env: [
+        integration: :test,
+        test: :test,
         "e2e.server": :e2e,
         "e2e.reset": :e2e
       ]
@@ -39,17 +41,18 @@ defmodule E2E.MixProject do
   defp deps do
     [
       {:cors_plug, "~> 2.0"},
-      {:phoenix, "~> 1.4.12"},
-      {:phoenix_pubsub, "~> 1.1"},
-      {:phoenix_ecto, "~> 4.0"},
-      {:ecto_sql, "~> 3.1"},
-      {:ex_machina, "~> 2.3.0", only: [:test, :e2e]},
-      {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 2.11"},
-      {:phoenix_live_reload, "~> 1.2", only: [:dev, :e2e]},
-      {:gettext, "~> 0.11"},
+      {:ecto_sql, "~> 3.4.3"},
+      {:ex_machina, "~> 2.4", only: [:test, :e2e]},
+      {:gettext, "~> 0.15.0"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:phoenix_ecto, "~> 4.1.0"},
+      {:phoenix_html, "~> 2.14.2"},
+      {:phoenix_live_reload, "~> 1.2", only: [:dev, :e2e]},
+      {:phoenix_pubsub, "~> 2.0.0"},
+      {:phoenix, "~> 1.5.3"},
+      {:plug_cowboy, "~> 2.3.0"},
+      {:postgrex, "0.15.3"},
+      {:wallaby, "~> 0.26.0", runtime: false, only: :test}
     ]
   end
 
@@ -64,8 +67,21 @@ defmodule E2E.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"],
+      integration: [
+        "frontend build",
+        "ecto.create --quiet",
+        "ecto.migrate",
+        "test --include integration"
+      ],
+      ci: [
+        "frontend build",
+        "ecto.create --quiet",
+        "ecto.migrate",
+        "cmd 'CI=true mix test --include integration'"
+      ],
       "e2e.server": ["phx.server"],
-      "e2e.reset": ["ecto.reset"]
+      "e2e.reset": ["ecto.reset"],
+      frontend: [~s[cmd "cd assets; npm run $!"]]
     ]
   end
 end

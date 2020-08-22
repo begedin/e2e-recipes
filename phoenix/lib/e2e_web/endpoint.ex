@@ -10,32 +10,34 @@ defmodule E2EWeb.Endpoint do
     signing_salt: "5chpHyH3"
   ]
 
-  socket "/socket", E2EWeb.UserSocket,
+  socket("/socket", E2EWeb.UserSocket,
     websocket: true,
     longpoll: false
+  )
 
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phx.digest
   # when deploying your static files in production.
-  plug Plug.Static,
+  plug(Plug.Static,
     at: "/",
     from: :e2e,
     gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
+  )
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do
-    socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
-    plug Phoenix.LiveReloader
-    plug Phoenix.CodeReloader
+    socket("/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket)
+    plug(Phoenix.LiveReloader)
+    plug(Phoenix.CodeReloader)
   end
 
-  plug Plug.RequestId
-  plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
+  plug(Plug.RequestId)
+  plug(Plug.Telemetry, event_prefix: [:phoenix, :endpoint])
 
-  plug CORSPlug, headers: CORSPlug.defaults()[:headers] ++ ["Sandbox"]
+  plug(CORSPlug, headers: CORSPlug.defaults()[:headers] ++ ["Sandbox"])
 
   e2e? = Mix.env() == :e2e
 
@@ -50,19 +52,20 @@ defmodule E2EWeb.Endpoint do
     )
   end
 
-  plug Plug.Parsers,
+  plug(Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
     json_decoder: Phoenix.json_library()
+  )
 
-  plug Plug.MethodOverride
-  plug Plug.Head
+  plug(Plug.MethodOverride)
+  plug(Plug.Head)
 
   if e2e? do
     Application.start(:ex_machina)
     plug(E2E.E2EPlug)
   end
 
-  plug Plug.Session, @session_options
-  plug E2EWeb.Router
+  plug(Plug.Session, @session_options)
+  plug(E2EWeb.Router)
 end

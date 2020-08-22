@@ -3,10 +3,10 @@ defmodule E2E.Todos do
   The Todos context.
   """
 
-  import Ecto.Query, warn: false
-  alias E2E.Repo
+  import Ecto.Query, only: [order_by: 2, where: 2]
 
-  alias E2E.Todos.Todo
+  alias E2E.{Accounts, Repo, Todos}
+  alias Ecto.Changeset
 
   @doc """
   Returns the list of todos.
@@ -14,63 +14,34 @@ defmodule E2E.Todos do
   ## Examples
 
       iex> list_todos()
-      [%Todo{}, ...]
+      [%Todos.Todo{}, ...]
 
   """
-  def list_todos do
-    Repo.all(Todo)
+  def list_todos(%Accounts.User{} = user) do
+    Todos.Todo |> where(user_id: ^user.id) |> order_by(asc: :id) |> Repo.all()
   end
 
   @doc """
-  Gets a single todo.
+  Gets a single todo by user and id
 
-  Raises `Ecto.NoResultsError` if the Todo does not exist.
-
-  ## Examples
-
-      iex> get_todo!(123)
-      %Todo{}
-
-      iex> get_todo!(456)
-      ** (Ecto.NoResultsError)
-
+  Returns {:error, :not_found} if todo non-existant
   """
-  def get_todo!(id), do: Repo.get!(Todo, id)
+  def get_todo(%Accounts.User{} = user, id) do
+    case Repo.get_by(Todos.Todo, id: id, user_id: user.id) do
+      nil -> {:error, :not_found}
+      todo -> {:ok, todo}
+    end
+  end
 
   @doc """
-  Creates a todo.
-
-  ## Examples
-
-      iex> create_todo(%{field: value})
-      {:ok, %Todo{}}
-
-      iex> create_todo(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
+  Creates a todo for a user
   """
-  def create_todo(attrs \\ %{}) do
-    %Todo{}
-    |> Todo.changeset(attrs)
+  @spec create_todo(Accounts.User.t(), map) :: any
+  def create_todo(%Accounts.User{} = user, %{} = attrs) do
+    %Todos.Todo{}
+    |> Todos.Todo.changeset(attrs)
+    |> Changeset.put_assoc(:user, user)
     |> Repo.insert()
-  end
-
-  @doc """
-  Updates a todo.
-
-  ## Examples
-
-      iex> update_todo(todo, %{field: new_value})
-      {:ok, %Todo{}}
-
-      iex> update_todo(todo, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_todo(%Todo{} = todo, attrs) do
-    todo
-    |> Todo.changeset(attrs)
-    |> Repo.update()
   end
 
   @doc """
@@ -79,26 +50,23 @@ defmodule E2E.Todos do
   ## Examples
 
       iex> delete_todo(todo)
-      {:ok, %Todo{}}
+      {:ok, %Todos.Todo{}}
 
       iex> delete_todo(todo)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_todo(%Todo{} = todo) do
+  def delete_todo(%Todos.Todo{} = todo) do
     Repo.delete(todo)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking todo changes.
-
-  ## Examples
-
-      iex> change_todo(todo)
-      %Ecto.Changeset{source: %Todo{}}
-
+  Returns an `%Ecto.Changeset{}` for for creating a new todo
   """
-  def change_todo(%Todo{} = todo) do
-    Todo.changeset(todo, %{})
+  @spec new_todo(Accounts.User.t()) :: Changeset.t()
+  def new_todo(%Accounts.User{} = user) do
+    %Todos.Todo{}
+    |> Todos.Todo.changeset(%{})
+    |> Changeset.put_assoc(:user, user)
   end
 end
