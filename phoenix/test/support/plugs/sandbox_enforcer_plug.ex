@@ -14,9 +14,13 @@ defmodule E2E.SandboxEnforcerPlug do
 
   require Logger
 
-  def init(_), do: []
+  def init(_) do
+    [enabled: Application.get_env(:e2e, :sql_sandbox, false)]
+  end
 
-  def call(conn, []) do
+  def call(conn, enabled: false), do: conn
+
+  def call(conn, enabled: true) do
     sandbox_id = Conn.get_req_header(conn, "sandbox") |> List.wrap() |> List.first()
 
     case {conn.method, conn.request_path} do

@@ -12,6 +12,7 @@ defmodule E2E.MixProject do
       aliases: aliases(),
       deps: deps(),
       preferred_cli_env: [
+        ci: :test,
         integration: :test,
         test: :test
       ]

@@ -1,11 +1,13 @@
 use Mix.Config
 
+config :phoenix, :plug_init_mode, :runtime
+
 config :e2e, E2EWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: false,
   check_origin: false,
-  server: not is_nil(System.get_env("E2E"))
+  server: System.get_env("E2E") |> Kernel.is_nil() |> Kernel.not()
 
 # Configure your database
 config :e2e, E2E.Repo,
@@ -15,14 +17,14 @@ config :e2e, E2E.Repo,
   hostname: System.get_env("DB_HOST") || "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
-config :e2e, sql_sandbox: not is_nil(System.get_env("SANDBOX"))
+config :e2e, sql_sandbox: System.get_env("SANDBOX") |> Kernel.is_nil() |> Kernel.not()
 
 # Print only warnings and errors during test
 config :logger, level: :warn
 
 config :wallaby,
   chromedriver: [
-    headless: not is_nil(System.get_env("HEADLESS")),
+    headless: System.get_env("HEADLESS") |> Kernel.is_nil() |> Kernel.not(),
     capabilities: %{
       javascriptEnabled: true,
       chromeOptions: %{
