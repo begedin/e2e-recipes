@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "serve:e2e": "(cd ../phoenix; MIX_ENV=e2e mix phx.server)",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
+    "serve:e2e": "(cd ../phoenix; MIX_ENV=test E2E=1 SANDBOX=1 mix phx.server)",
+    "serve:e2e:ci": "(cd ../phoenix; MIX_ENV=test E2E=1 SANDBOX=1 HEADLESS=1 mix phx.server)",
     "test:e2e": "(npm run serve:e2e & vue-cli-service test:e2e && kill $(lsof -t -i:4000))",
-    "test:e2e:ci": "(npm run serve:e2e & vue-cli-service test:e2e --headless && kill $(lsof -t -i:4000))",
+    "test:e2e:ci": "(npm run serve:e2e:ci & vue-cli-service test:e2e --headless && kill $(lsof -t -i:4000))",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

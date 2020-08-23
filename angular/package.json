@@ -9,9 +9,10 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "e2e:ci": "(ng e2e --protractorConfig=e2e/e2e.protractor.conf.js)",
-    "serve:e2e": "(cd ../phoenix; MIX_ENV=e2e mix phx.server)",
+    "serve:e2e": "(cd ../phoenix; MIX_ENV=test E2E=1 SANDBOX=1 mix phx.server)",
+    "serve:e2e:ci": "(cd ../phoenix; MIX_ENV=test E2E=1 SANDBOX=1 HEADLESS=1 mix phx.server)",
     "test:e2e": "(npm run serve:e2e & npm run e2e && kill $(lsof -t -i:4000))",
-    "test:e2e:ci": "(npm run serve:e2e & npm run e2e:ci && kill $(lsof -t -i:4000))"
+    "test:e2e:ci": "(npm run serve:e2e:ci & npm run e2e:ci && kill $(lsof -t -i:4000))"
   },
   "private": true,
   "dependencies": {

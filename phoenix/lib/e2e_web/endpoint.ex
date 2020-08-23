@@ -39,7 +39,7 @@ defmodule E2EWeb.Endpoint do
 
   plug(CORSPlug, headers: CORSPlug.defaults()[:headers] ++ ["Sandbox"])
 
-  e2e? = Mix.env() == :e2e
+  e2e? = Application.get_env(:e2e, :sql_sandbox)
 
   if e2e? do
     plug(E2E.SandboxEnforcerPlug)
