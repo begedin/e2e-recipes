@@ -12,9 +12,19 @@ defmodule E2E.E2EPlug do
   alias E2E.SandboxFactory
   alias Plug.Conn
 
-  def init(_), do: []
+  def init(_) do
+    enabled = Application.get_env(:e2e, :sql_sandbox, false)
 
-  def call(%Conn{method: "POST", request_path: "/api/factory"} = conn, []) do
+    if enabled do
+      Application.start(:ex_machina)
+    end
+
+    [enabled: enabled]
+  end
+
+  def call(%Conn{} = conn, enabled: false), do: conn
+
+  def call(%Conn{method: "POST", request_path: "/api/factory"} = conn, enabled: true) do
     with {:ok, schema} <- Map.fetch(conn.body_params, "schema"),
          {:ok, attrs} <- Map.fetch(conn.body_params, "attributes") do
       db_schema = String.to_atom(schema)
@@ -31,7 +41,7 @@ defmodule E2E.E2EPlug do
     end
   end
 
-  def call(%Conn{} = conn, []), do: conn
+  def call(%Conn{} = conn, enabled: true), do: conn
 
   @spec create(atom, list(map) | map, nil | integer) :: struct | list(struct)
   def create(schema, attrs, nil) when is_list(attrs) do

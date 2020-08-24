@@ -1,27 +1,30 @@
 use Mix.Config
 
+config :phoenix, :plug_init_mode, :runtime
+
+config :e2e, E2EWeb.Endpoint,
+  http: [port: 4000],
+  debug_errors: true,
+  code_reloader: false,
+  check_origin: false,
+  server: System.get_env("E2E") |> Kernel.is_nil() |> Kernel.not()
+
 # Configure your database
 config :e2e, E2E.Repo,
   username: "postgres",
   password: "postgres",
   database: "e2e_test",
-  hostname: "localhost",
+  hostname: System.get_env("DB_HOST") || "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
-# We don't run a server during test. If one is required,
-# you can enable the server option below.
-config :e2e, E2EWeb.Endpoint,
-  http: [port: 4002],
-  server: true
-
-config :e2e, sql_sandbox: true
+config :e2e, sql_sandbox: System.get_env("SANDBOX") |> Kernel.is_nil() |> Kernel.not()
 
 # Print only warnings and errors during test
 config :logger, level: :warn
 
 config :wallaby,
   chromedriver: [
-    headless: System.get_env("CI") === "true",
+    headless: System.get_env("HEADLESS") |> Kernel.is_nil() |> Kernel.not(),
     capabilities: %{
       javascriptEnabled: true,
       chromeOptions: %{

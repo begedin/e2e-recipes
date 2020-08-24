@@ -53,10 +53,7 @@ jobs:
       run: |
         cd phoenix
         mix ci
-        
-    - name: Build backend in E2E Env
-      run: cd phoenix && MIX_ENV=e2e mix do ecto.reset  
-    
+            
     - name: Run Angular E2E tests
       run: |
         cd angular

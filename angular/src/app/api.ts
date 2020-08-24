@@ -25,6 +25,7 @@ const getSandboxCookie = () => {
 const client = () => {
   const token = window.localStorage.getItem('token');
   const sandbox = getSandboxCookie();
+  console.log(sandbox, 'sandbox');
   const headers = {
     ...(token && { Authorization: `Bearer ${token}` }),
     ...(sandbox && { sandbox }),

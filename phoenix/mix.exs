@@ -12,10 +12,9 @@ defmodule E2E.MixProject do
       aliases: aliases(),
       deps: deps(),
       preferred_cli_env: [
+        ci: :test,
         integration: :test,
-        test: :test,
-        "e2e.server": :e2e,
-        "e2e.reset": :e2e
+        test: :test
       ]
     ]
   end
@@ -32,7 +31,6 @@ defmodule E2E.MixProject do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(:e2e), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
@@ -47,7 +45,7 @@ defmodule E2E.MixProject do
       {:jason, "~> 1.0"},
       {:phoenix_ecto, "~> 4.1.0"},
       {:phoenix_html, "~> 2.14.2"},
-      {:phoenix_live_reload, "~> 1.2", only: [:dev, :e2e]},
+      {:phoenix_live_reload, "~> 1.2", only: [:dev]},
       {:phoenix_pubsub, "~> 2.0.0"},
       {:phoenix, "~> 1.5.3"},
       {:plug_cowboy, "~> 2.3.0"},
@@ -71,16 +69,14 @@ defmodule E2E.MixProject do
         "frontend build",
         "ecto.create --quiet",
         "ecto.migrate",
-        "test --include integration"
+        "cmd 'E2E=1 mix test --include integration'"
       ],
       ci: [
         "frontend build",
         "ecto.create --quiet",
         "ecto.migrate",
-        "cmd 'CI=true mix test --include integration'"
+        "cmd 'E2E=1 HEADLESS=1 mix test --include integration'"
       ],
-      "e2e.server": ["phx.server"],
-      "e2e.reset": ["ecto.reset"],
       frontend: [~s[cmd "cd assets; npm run $!"]]
     ]
   end
