@@ -1,5 +1,7 @@
 import { sandboxAxiosInstance } from './api';
 
+type FactoryRecord = { id: number };
+
 export class Factory {
   api: ReturnType<typeof sandboxAxiosInstance>;
 
@@ -19,11 +21,11 @@ export class Factory {
    * - created users will include id, email, first and last name
    * - created invitations will include token
    * - other records will include just the id
-   *
-   * @param {String} schema The type of record to create on the backend
-   * @param {Object | Array<Object>} attributes
    */
-  async create(schema: string, attributes: object = {}) {
+  async create(
+    schema: string,
+    attributes: object = {}
+  ): Promise<FactoryRecord> {
     const { data } = await this.api.post('/factory', { schema, attributes });
     return data;
   }
@@ -37,11 +39,12 @@ export class Factory {
    *
    * This is the fastest way to create multiple records of the same type on
    * the backend.
-   * @param {String} schema Type of records to create
-   * @param {Integer} count Amount of records to create
-   * @param {Object} attributes Attributes the records will share
    */
-  async createList(schema: string, count: number, attributes: object = {}) {
+  async createList(
+    schema: string,
+    count: number,
+    attributes: object = {}
+  ): Promise<FactoryRecord> {
     const { data } = await this.api.post('/factory', {
       schema,
       count,
@@ -51,6 +54,5 @@ export class Factory {
   }
 }
 
-export function createFactory(sandboxId: string) {
-  return new Factory(sandboxId);
-}
+export const createFactory = (sandboxId: string): Factory =>
+  new Factory(sandboxId);

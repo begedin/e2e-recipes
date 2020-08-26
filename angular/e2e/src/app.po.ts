@@ -1,14 +1,6 @@
-import { browser, by, element, promise, ElementFinder } from 'protractor';
+import { browser, by, element, promise } from 'protractor';
 
 export class AppPage {
-  navigateTo(): Promise<unknown> {
-    return browser.get(browser.baseUrl) as Promise<unknown>;
-  }
-
-  currentUrl(): promise.Promise<string> {
-    return browser.getCurrentUrl();
-  }
-
   navigation = {
     login: element(by.linkText('Login')),
     register: element(by.linkText('Register')),
@@ -42,4 +34,12 @@ export class AppPage {
       submit: element(by.buttonText('Create')),
     },
   };
+
+  navigateTo(): Promise<unknown> {
+    return browser.get(browser.baseUrl) as Promise<unknown>;
+  }
+
+  currentUrl(): promise.Promise<string> {
+    return browser.getCurrentUrl();
+  }
 }

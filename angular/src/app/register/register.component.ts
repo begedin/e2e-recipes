@@ -11,12 +11,12 @@ import { register } from '../store';
 export class RegisterComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) {}
 
+  name = '';
+  password = '';
+
   ngOnInit(): void {}
 
-  name: string = '';
-  password: string = '';
-
-  async register() {
+  async register(): Promise<void> {
     await register(this.name, this.password);
     this.router.navigate(['/']);
   }

@@ -9,11 +9,11 @@ import { createTodo } from 'src/app/store';
 export class NewTodoComponent implements OnInit {
   constructor() {}
 
-  title: string = '';
+  title = '';
 
   ngOnInit(): void {}
 
-  async createTodo() {
+  async createTodo(): Promise<void> {
     await createTodo(this.title);
     this.title = '';
   }

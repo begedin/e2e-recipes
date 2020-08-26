@@ -12,11 +12,11 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  logout() {
+  logout(): void {
     logout();
   }
 
-  get authenticated() {
+  get authenticated(): boolean {
     return state.authenticated;
   }
 }
