@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "lint:angular": "(cd angular; npm run lint)",
-    "lint:phoenix": "(cd phoenix/assets; npm run lint)",
     "lint:react": "(cd react; npm run lint)",
     "lint:vue": "(cd vue; npm run lint)",
     "start:angular": "(cd angular; ng serve --open)",

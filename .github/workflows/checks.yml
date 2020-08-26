@@ -51,9 +51,6 @@ jobs:
         (cd react; npm i)
         (cd vue; npm i)
 
-    - name: Lint Phoenix
-      run: npm run lint:phoenix
-
     - name: Lint Angular
       run: npm run lint:angular
 
