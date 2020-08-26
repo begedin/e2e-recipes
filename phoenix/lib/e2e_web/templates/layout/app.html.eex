@@ -17,19 +17,21 @@
       <nav role="navigation">
         <ul>
           <%= if assigns[:user] do %>
-            <%= link("ToDos", to: Routes.todo_path(@conn, :index)) %>
-            <%= button("Log Out", to: Routes.session_path(@conn, :delete), method: :delete) %>
+            <li><%= link("ToDos", to: Routes.todo_path(@conn, :index)) %></li>
+            <li><%= button("Log Out", to: Routes.session_path(@conn, :delete), method: :delete) %></li>
           <% else %>
-            <%= link("Login", to: Routes.session_path(@conn, :new)) %>
-            <%= link("Register", to: Routes.user_path(@conn, :new)) %>
+            <li><%= link("Login", to: Routes.session_path(@conn, :new)) %></li>
+            <li><%= link("Register", to: Routes.user_path(@conn, :new)) %></li>
           <% end %>
         </ul>
       </nav>
     </section>
   </header>
   <main role="main" class="container">
-    <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-    <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <% info = get_flash(@conn, :info) %>
+    <%= if info do %><p class="alert alert-info" role="alert"><%= info %></p><% end %>
+    <% error = get_flash(@conn, :error) %>
+    <%= if error do %><p class="alert alert-danger" role="alert"><%= error %></p><% end %>
     <%= @inner_content %>
   </main>
 </body>
