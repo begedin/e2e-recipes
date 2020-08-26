@@ -9,11 +9,12 @@ import { Todo, deleteTodo } from 'src/app/store';
 export class TodoComponent implements OnInit {
   constructor() {}
 
-  @Input() todo: Todo;
+  @Input()
+  todo: Todo;
 
   ngOnInit(): void {}
 
-  deleteTodo() {
+  deleteTodo(): void {
     deleteTodo(this.todo);
   }
 }
