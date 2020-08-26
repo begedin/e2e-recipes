@@ -29,7 +29,7 @@ defmodule E2E.Integration.LoginTest do
     |> click(Query.button("Login"))
     |> assert_has(Query.link("Register"))
     |> assert_has(Query.link("Login"))
-    |> assert_has(Query.css(".alert-danger", text: "Invalid credentials"))
+    |> assert_has(Query.css(".alert-danger"))
     |> refute_has(Query.button("Log Out"))
 
     assert current_path(session) == "/login"

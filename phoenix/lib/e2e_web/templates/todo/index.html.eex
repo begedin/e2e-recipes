@@ -1,3 +1,4 @@
+<h3>Todos</h3>
 <%= for todo <- @todos do %>
   <div class="todo">
     <%= todo.title %>
@@ -5,9 +6,9 @@
   </div>
 <% end %>
 <%= if Enum.count(@todos) === 0 do %>
-  <div>You don't have any todos.</div>
+  <div class="no-todos">You don't have any todos.</div>
 <% end %>
 <%= form_for @changeset, Routes.todo_path(@conn, :create), fn f -> %>
-  <%= text_input(f, :title, placeholder: "New todo") %>
+  <%= text_input(f, :title, placeholder: "New todo", autofocus: true) %>
   <%= submit "Create" %>
 <% end %>
