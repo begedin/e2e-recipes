@@ -4,22 +4,19 @@ Put the PR description here
 
 # Check List
 
-## Angular 
+## Angular
 
-- [ ] No lint errors
 - [ ] New public interfaces are documented
 
 ## React
 
-- [ ] No lint errors
 - [ ] New public interfaces are documented
 
 ## Vue
 
-- [ ] No lint errors
 - [ ] New public interfaces are documented
 
-## Backend 
+## Backend
 
 - [ ] No dialyzer errors
 - [ ] All new modules have @moduledoc
