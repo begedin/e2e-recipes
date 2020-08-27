@@ -6,7 +6,7 @@ import Login from 'views/Login'
 import Register from 'views/Register'
 import Todos from 'views/Todos'
 
-import 'App.css'
+import 'App.scss'
 import configureStore from 'store/configureStore'
 import PrivateRoute from 'components/PrivateRoute'
 import PublicRoute from 'components/PublicRoute'

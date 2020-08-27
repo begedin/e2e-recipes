@@ -1,0 +1,104 @@
+$color1: #f1f1e8;
+$color2: #206a5d;
+$color3: #81b214;
+$color4: #ee6f57;
+
+html,
+body {
+  font-size: 1em;
+  font-family: sans-serif;
+}
+
+@mixin button {
+  background: $color2;
+  border-radius: 0.2em;
+  color: $color1;
+  cursor: pointer;
+  display: block;
+  font-size: 100%;
+  font-weight: bold;
+  padding: 0.75em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition-property: background, box-shadow;
+  transition: all 0.2s ease;
+
+  &:hover,
+  &:active {
+    background: $color3;
+    color: $color1;
+    box-shadow: 0px 7px 20px 5px rgba($color2, 0.3),
+      0px 7px 2px -5px rgba($color3, 0.2);
+  }
+}
+
+div#root {
+  padding: 1em;
+  display: grid;
+  grid-auto-flow: row;
+  justify-content: center;
+  align-content: center;
+  row-gap: 1em;
+}
+
+nav {
+  padding: 0;
+  display: grid;
+  grid-auto-flow: column;
+  column-gap: 1em;
+  justify-content: center;
+
+  a {
+    @include button;
+  }
+}
+
+form {
+  display: grid;
+  grid-auto-flow: row;
+  justify-content: center;
+  row-gap: 1.5em;
+
+  label {
+    display: grid;
+    grid-auto-flow: row;
+    justify-content: start;
+    row-gap: 1em;
+  }
+
+  input,
+  button {
+    display: block;
+  }
+}
+
+input,
+button {
+  appearance: none;
+  padding: 0.75em;
+}
+
+button {
+  @include button;
+}
+
+button,
+button:hover,
+button:active {
+  border: none;
+}
+
+h3 {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.todo {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr auto;
+}
+
+.no-todos {
+  text-align: center;
+}

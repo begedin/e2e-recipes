@@ -10,15 +10,15 @@ type Props = { authenticated: boolean; dispatch: AppDispatch }
 
 const NavBar = (props: Props) =>
   props.authenticated ? (
-    <div>
-      <NavLink to="/todos">ToDos</NavLink>,
+    <nav>
+      <NavLink to="/todos">ToDos</NavLink>
       <button onClick={() => props.dispatch(logout())}>Log Out</button>
-    </div>
+    </nav>
   ) : (
-    <div>
-      <NavLink to="/login">Login</NavLink>,
+    <nav>
+      <NavLink to="/login">Login</NavLink>
       <NavLink to="/register">Register</NavLink>
-    </div>
+    </nav>
   )
 
 const mapStateToProps = (state: RootState): Pick<Props, 'authenticated'> => {

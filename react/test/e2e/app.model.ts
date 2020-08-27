@@ -4,10 +4,10 @@ import { baseUrl } from './config'
 
 export default class AppModel {
   navigation = {
-    login: Selector('a').withText('Login'),
-    register: Selector('a').withText('Register'),
-    todos: Selector('a').withText('ToDos'),
-    logoutButton: Selector('button').withText('Log Out')
+    login: Selector('a').withText('LOGIN'),
+    register: Selector('a').withText('REGISTER'),
+    todos: Selector('a').withText('TODOS'),
+    logoutButton: Selector('button').withText('LOG OUT')
   }
   register = {
     nameField: Selector('input[type=text]'),
