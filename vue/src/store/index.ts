@@ -31,6 +31,11 @@ const actions: ActionTree<State, State> = {
     commit('SET_AUTHENTICATED', true);
   },
 
+  async logout({ commit }) {
+    localStorage.removeItem('token');
+    commit('SET_AUTHENTICATED', false);
+  },
+
   async fetchTodos({ commit }) {
     const { data: todos } = await get<Todo[]>('todos');
     commit('SET_TODOS', todos);

@@ -1,7 +1,13 @@
 <template>
   <form class="login" @submit.prevent="login">
-    <input type="text" required v-model="name" />
-    <input type="password" required v-model="password" />
+    <label>
+      Login
+      <input type="text" required v-model="name" />
+    </label>
+    <label>
+      Password
+      <input type="password" required v-model="password" />
+    </label>
     <button type="submit">Login</button>
   </form>
 </template>

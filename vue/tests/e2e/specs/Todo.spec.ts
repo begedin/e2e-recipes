@@ -45,9 +45,9 @@ describe('Login', () => {
 
     cy.contains('Buy Milk');
     cy.contains('Write Homework');
-    cy.get('button:eq(0)').click();
+    cy.get('.todo:eq(0) button').click();
     cy.get('body').should('not.contain', 'Buy Milk');
-    cy.get('button:eq(0)').click();
+    cy.get('.todo:eq(0) button').click();
     cy.get('body').should('not.contain', 'Write Homework');
   });
 });
