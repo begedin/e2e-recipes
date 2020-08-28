@@ -3,7 +3,7 @@ import { browser, by, element, promise } from 'protractor';
 export class AppPage {
   navigation = {
     login: element(by.linkText('Login')),
-    register: element(by.linkText('Register')),
+    register: element(by.linkText('REGISTER')),
   };
 
   login = {
@@ -19,7 +19,7 @@ export class AppPage {
   };
 
   todos = {
-    items: element.all(by.css('.todo')),
+    items: element.all(by.css('app-todo')),
 
     itemAt: (index: number) => {
       const item = this.todos.items.get(index);

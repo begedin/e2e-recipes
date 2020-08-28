@@ -1,0 +1,52 @@
+$color1: #e8f9e9;
+$color2: #9de3d0;
+$color3: #baf1a1;
+$color4: #f688bb;
+
+@mixin button {
+  background: $color2;
+  border-radius: 0.2em;
+  border: none;
+  color: $color1;
+  cursor: pointer;
+  display: block;
+  font-size: 100%;
+  font-weight: bold;
+  padding: 0.75em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition-property: background, box-shadow;
+  transition: all 0.2s ease;
+
+  &:hover,
+  &:active {
+    background: $color3;
+    color: $color1;
+    box-shadow: 0px 7px 20px 5px rgba($color2, 0.3),
+      0px 7px 2px -5px rgba($color3, 0.2);
+  }
+}
+
+@mixin form {
+  display: grid;
+  grid-auto-flow: row;
+  justify-content: center;
+  row-gap: 2em;
+
+  label {
+    display: grid;
+    grid-auto-flow: row;
+    justify-content: start;
+    row-gap: .5em;
+  }
+
+  input,
+  button {
+    display: block;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    padding: .5em;
+  }
+}

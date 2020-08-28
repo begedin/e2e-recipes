@@ -1,0 +1,12 @@
+@import "~src/shared.scss";
+
+:host {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr auto;
+  column-gap: 1em;
+
+  button {
+    @include button;
+  }
+}

@@ -1,20 +1,16 @@
+@import "~src/shared.scss";
+
 nav {
-  ul {
-    list-style-type: none;
-    display: grid;
-    grid-auto-flow: column;
-    column-gap: 1em;
-    align-items: center;
+  list-style-type: none;
+  display: grid;
+  grid-auto-flow: column;
 
-    li {
 
-      a,
-      button {
-        padding: .5em;
-        background: rgb(255, 255, 255, .3);
-        border-radius: .2em;
-        text-decoration: none;
-      }
-    }
+  column-gap: 1em;
+  align-items: center;
+
+  a,
+  button {
+    @include button;
   }
 }
