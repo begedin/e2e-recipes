@@ -1,5 +1,6 @@
 <template>
   <div class="todos">
+    <h3>Todos</h3>
     <todo-item v-for="todo in todos" :key="todo.id" :todo="todo" />
     <add-todo />
   </div>
@@ -11,6 +12,7 @@ import { State } from 'vuex-class';
 import { Todo } from '../store/types';
 import TodoItem from './Todos/TodoItem.vue';
 import AddTodo from './Todos/AddTodo.vue';
+
 @Component({
   name: 'home',
   components: { AddTodo, TodoItem },
@@ -30,5 +32,4 @@ export default class Todos extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

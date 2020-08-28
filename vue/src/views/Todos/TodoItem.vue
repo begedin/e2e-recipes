@@ -20,5 +20,9 @@ export default class TodoItem extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
+.todo {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr auto;
+}
 </style>
