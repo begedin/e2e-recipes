@@ -48,7 +48,7 @@ jobs:
         restore-keys: ${{ runner.os }}-elixir-cache-
 
     - name: Elixir backend deps/build
-      if: !steps.elixir-cache.outputs.cache-hit != 'true'
+      if: steps.elixir-cache.outputs.cache-hit != 'true'
       run: (cd phoenix; mix deps.get)
 
     - name: Restore elixir frontend cache
@@ -60,7 +60,7 @@ jobs:
         restore-keys: ${{ runner.os }}-elixir-frontend-cache-
 
     - name: Fetch elixir frontend deps
-      if: !steps.elixir-frontend-cache.outputs.cache-hit != 'true'
+      if: steps.elixir-frontend-cache.outputs.cache-hit != 'true'
       run: (cd phoenix/assets; npm i)
 
     - name: Lint elixir (credo)
@@ -84,7 +84,7 @@ jobs:
         restore-keys: ${{ runner.os }}-angular-cache-
 
     - name: Fetch angular deps
-      if: !steps.angular-cache.outputs.cache-hit != 'true'
+      if: steps.angular-cache.outputs.cache-hit != 'true'
       run: (cd angular; npm i)
 
     - name: Lint Angular
@@ -102,7 +102,7 @@ jobs:
         restore-keys: ${{ runner.os }}-vue-cache-
 
     - name: Fetch vue deps
-      if: !steps.vue-cache.outputs.cache-hit != 'true'
+      if: steps.vue-cache.outputs.cache-hit != 'true'
       run: (cd vue; npm i)
 
     - name: Lint Vue
@@ -120,7 +120,7 @@ jobs:
         restore-keys: ${{ runner.os }}-react-cache-
 
     - name: Fetch react deps
-      if: !steps.react-cache.outputs.cache-hit != 'true'
+      if: steps.react-cache.outputs.cache-hit != 'true'
       run: (cd react; npm i)
 
     - name: Lint React
