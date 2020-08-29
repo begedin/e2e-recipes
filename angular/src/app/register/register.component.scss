@@ -1,0 +1,11 @@
+@import "~src/shared.scss";
+
+:host {
+  form {
+    @include form;
+  }
+
+  button {
+    @include button;
+  }
+}

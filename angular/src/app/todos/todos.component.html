@@ -1,4 +1,3 @@
- <ng-template ngFor let-todo [ngForOf]="todos">
-   <app-todo [todo]="todo"> </app-todo>
- </ng-template>
- <app-new-todo></app-new-todo>
+<app-todo *ngFor="let todo of todos" [todo]="todo"> </app-todo>
+<app-new-todo></app-new-todo>
+

@@ -1,8 +1,6 @@
 <nav>
-  <ul>
-    <li *ngIf="!authenticated"><a routerLink="/login" routerLinkActive="active">Login</a></li>
-    <li *ngIf="!authenticated"><a routerLink="/register" routerLinkActive="active">Register</a></li>
-    <li *ngIf="authenticated"><a routerLink="/" routerLinkActive="active">Todos</a></li>
-    <li *ngIf="authenticated"><button (click)="logout()">Logout</button></li>
-  </ul>
+  <a *ngIf="!authenticated" routerLink="/login" routerLinkActive="active">Login</a>
+  <a *ngIf="!authenticated" routerLink="/register" routerLinkActive="active">Register</a>
+  <a *ngIf="authenticated" routerLink="/" routerLinkActive="active">Todos</a>
+  <button *ngIf="authenticated"utton (click)="logout()">Logout</button>
 </nav>
