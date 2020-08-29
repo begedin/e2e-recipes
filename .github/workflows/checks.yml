@@ -37,22 +37,19 @@ jobs:
         node-version: 12.8.0
 
 
-    - name: Restore elixir cache
+    - name: Restore elixir backend cache
       id: elixir-cache
       uses: actions/cache@v2
       with:
         path: |
           phoenix/deps
           phoenix/_build
-          phoenix/assets/node_modules
         key: ${{ runner.os }}-mix-${{ hashFiles('phoenix/mix.lock') }}
         restore-keys: ${{ runner.os }}-elixir-cache-
 
-    - name: Fetch deps & compile elixir
+    - name: Elixir backend deps/build
       if: !steps.elixir-cache.outputs.cache-hit != 'true'
-      run: |
-        (cd phoenix; mix deps.get)
-        (cd phoenix/assets; npm i)
+      run: (cd phoenix; mix deps.get)
 
     - name: Restore elixir frontend cache
       id: elixir-frontend-cache
