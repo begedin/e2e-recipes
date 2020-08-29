@@ -1,4 +1,5 @@
 defmodule E2E.Todos.Todo do
+  @moduledoc "Maps a todo onto the database"
   use Ecto.Schema
   import Ecto.Changeset
 

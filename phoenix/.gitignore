@@ -39,3 +39,6 @@
 
 # asdf
 .tool-versions
+
+/priv/plts/*.plt
+/priv/plts/*.plt.hash

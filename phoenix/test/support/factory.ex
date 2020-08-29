@@ -1,4 +1,5 @@
 defmodule E2E.Factory do
+  @moduledoc false
   # with Ecto
   use ExMachina.Ecto, repo: E2E.Repo
 
