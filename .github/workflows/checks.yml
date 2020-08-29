@@ -44,6 +44,7 @@ jobs:
         path: |
           phoenix/deps
           phoenix/_build
+          phoenix/priv/plts
         key: ${{ runner.os }}-mix-${{ hashFiles('phoenix/mix.lock') }}
         restore-keys: ${{ runner.os }}-elixir-cache-
 
