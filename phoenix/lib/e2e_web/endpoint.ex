@@ -39,14 +39,16 @@ defmodule E2EWeb.Endpoint do
 
   plug(CORSPlug, headers: CORSPlug.defaults()[:headers] ++ ["Sandbox"])
 
-  plug(E2E.SandboxEnforcerPlug)
+  if Mix.env() === :test do
+    plug(E2E.SandboxEnforcerPlug)
 
-  plug(Phoenix.Ecto.SQL.Sandbox,
-    at: "/api/sandbox",
-    repo: E2E.Repo,
-    timeout: 60_000,
-    header: "sandbox"
-  )
+    plug(Phoenix.Ecto.SQL.Sandbox,
+      at: "/api/sandbox",
+      repo: E2E.Repo,
+      timeout: 60_000,
+      header: "sandbox"
+    )
+  end
 
   plug(Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
@@ -57,7 +59,9 @@ defmodule E2EWeb.Endpoint do
   plug(Plug.MethodOverride)
   plug(Plug.Head)
 
-  plug(E2E.E2EPlug)
+  if Mix.env() === :test do
+    plug(E2E.E2EPlug)
+  end
 
   plug(Plug.Session, @session_options)
   plug(E2EWeb.Router)

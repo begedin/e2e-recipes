@@ -4,6 +4,7 @@ defmodule E2E.MixProject do
   def project do
     [
       app: :e2e,
+      dialyzer: dialyzer(),
       version: "0.1.0",
       elixir: "~> 1.10.4",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -39,6 +40,8 @@ defmodule E2E.MixProject do
   defp deps do
     [
       {:cors_plug, "~> 2.0"},
+      {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:ecto_sql, "~> 3.4.3"},
       {:ex_machina, "~> 2.4", only: [:test, :e2e]},
       {:gettext, "~> 0.15.0"},
@@ -51,6 +54,13 @@ defmodule E2E.MixProject do
       {:plug_cowboy, "~> 2.3.0"},
       {:postgrex, "0.15.3"},
       {:wallaby, "~> 0.26.0", runtime: false, only: :test}
+    ]
+  end
+
+  defp dialyzer do
+    [
+      plt_add_deps: :app_tree,
+      plt_file: {:no_warn, "priv/plts/e2e.plt"}
     ]
   end
 

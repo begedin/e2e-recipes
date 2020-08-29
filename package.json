@@ -4,6 +4,9 @@
   "description": "Collection of e2e testing recipes",
   "main": "index.js",
   "scripts": {
+    "lint:phoenix:credo": "(cd phoenix; mix credo)",
+    "lint:phoenix:formatter": "(cd phoenix; mix format --check-formatted)",
+    "lint:phoenix:dialyzer": "(cd phoenix; mix dialyzer)",
     "lint:angular": "(cd angular; npm run lint)",
     "lint:react": "(cd react; npm run lint)",
     "lint:vue": "(cd vue; npm run lint)",
