@@ -26,3 +26,13 @@ test('Registers user', async t => {
     .expect(app.navigation.logoutButton.exists)
     .ok()
 })
+
+test('Fails with unsubmitted credentials', async t => {
+  await t
+    .click(app.navigation.register)
+    .click(app.register.submitButton)
+    .expect(app.url.isRegister())
+    .ok()
+    .expect(app.error.exists)
+    .ok()
+})

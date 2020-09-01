@@ -7,7 +7,9 @@ import {
   RECEIVE_REGISTER,
   REQUEST_LOGIN,
   RECEIVE_LOGIN,
-  LOGOUT
+  LOGOUT,
+  SET_ERROR,
+  CLEAR_ERROR
 } from './actionTypes'
 import { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { Action } from 'redux'
@@ -21,6 +23,7 @@ export type Todo = { id: number; title: string }
 
 export type RootState = {
   authenticated: boolean
+  error: string | null
   isFetching: boolean
   todos: Todo[]
   user?: User
@@ -44,6 +47,9 @@ export type ReceiveTodosAction = Action<typeof RECEIVE_TODOS> & {
   todos: Todo[]
 }
 
+export type SetErrorAction = Action<typeof SET_ERROR> & { error: string }
+export type ClearErrorAction = Action<typeof CLEAR_ERROR>
+
 export type AppAction =
   | RequestLoginAction
   | ReceiveLoginAction
@@ -54,6 +60,8 @@ export type AppAction =
   | RemoveTodoAction
   | RequestTodosAction
   | ReceiveTodosAction
+  | SetErrorAction
+  | ClearErrorAction
 
 export type AppThunk<ReturnType = void, Params = void> = (
   params: Params

@@ -6,13 +6,16 @@ import {
   ADD_TODO,
   RECEIVE_REGISTER,
   LOGOUT,
-  REMOVE_TODO
+  REMOVE_TODO,
+  SET_ERROR,
+  CLEAR_ERROR
 } from './actionTypes'
 
 const initialState = (): RootState => ({
   authenticated: false,
   isFetching: false,
-  todos: []
+  todos: [],
+  error: null
 })
 
 const rootReducer = (state: RootState = initialState(), action: AppAction) => {
@@ -37,6 +40,10 @@ const rootReducer = (state: RootState = initialState(), action: AppAction) => {
     case LOGOUT:
       window.localStorage.removeItem('token')
       return Object.assign({}, state, { authenticated: false })
+    case SET_ERROR:
+      return Object.assign({}, state, { error: action.error })
+    case CLEAR_ERROR:
+      return Object.assign({}, state, { error: null })
     default:
       return state
   }

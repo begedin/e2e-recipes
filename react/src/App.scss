@@ -7,6 +7,7 @@ html,
 body {
   font-size: 1em;
   font-family: sans-serif;
+  background: #f1f1e8;
 }
 
 @mixin button {
@@ -93,12 +94,29 @@ h3 {
   text-transform: uppercase;
 }
 
+.todos {
+  display: grid;
+  grid-auto-flow: row;
+  row-gap: 0.5em;
+}
+
 .todo {
   display: grid;
   align-items: center;
   grid-template-columns: 1fr auto;
+
+  border: 2px solid $color2;
+  border-radius: 5px;
+  padding: 0.5em;
+
+  div {
+    text-align: center;
+    color: $color2;
+    font-weight: bold;
+  }
 }
 
-.no-todos {
+.error {
+  color: $color4;
   text-align: center;
 }

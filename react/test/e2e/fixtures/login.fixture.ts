@@ -38,4 +38,6 @@ test('Fails with incorrect credentials', async t => {
     .click(app.login.submitButton)
     .expect(app.url.isLogin())
     .ok()
+    .expect(app.error.exists)
+    .ok()
 })

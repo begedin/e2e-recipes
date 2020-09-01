@@ -11,7 +11,9 @@ import {
   RequestLoginAction,
   ReceiveLoginAction,
   User,
-  LogoutAction
+  LogoutAction,
+  SetErrorAction,
+  ClearErrorAction
 } from './types'
 import {
   REQUEST_REGISTER,
@@ -22,8 +24,17 @@ import {
   RECEIVE_TODOS,
   REQUEST_LOGIN,
   RECEIVE_LOGIN,
-  LOGOUT
+  LOGOUT,
+  SET_ERROR,
+  CLEAR_ERROR,
 } from './actionTypes'
+
+export const setError = (error: string): SetErrorAction => ({
+  type: SET_ERROR,
+  error
+})
+
+export const clearError = (): ClearErrorAction => ({ type: CLEAR_ERROR })
 
 export const requestLogin = (): RequestLoginAction => ({ type: REQUEST_LOGIN })
 export const receiveLogin = (token: string): ReceiveLoginAction => ({
@@ -32,12 +43,13 @@ export const receiveLogin = (token: string): ReceiveLoginAction => ({
 })
 
 export const login: AppThunk<void, User> = (login: User) => async dispatch => {
+  dispatch(clearError)
   dispatch(requestLogin)
   try {
     const { data: token } = await post<string>('login', { login })
     dispatch(receiveLogin(token))
   } catch (e) {
-    // TODO: Set error
+    dispatch(setError('Invalid credentials'))
   }
 }
 
@@ -54,9 +66,15 @@ export const receiveRegister = (user: User): ReceiveRegisterAction => ({
 export const register: AppThunk<void, User> = (
   user: User
 ) => async dispatch => {
+  dispatch(clearError)
   dispatch(requestRegister)
-  const { data } = await post<User>('users', { user })
-  dispatch(receiveRegister(data))
+  try {
+    const { data } = await post<User>('users', { user })
+    dispatch(receiveRegister(data))
+
+  } catch (e) {
+    dispatch(setError('Invalid credentials'))
+  }
 }
 
 export const requestTodos = (): RequestTodosAction => ({ type: REQUEST_TODOS })

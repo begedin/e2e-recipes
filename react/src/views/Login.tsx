@@ -11,25 +11,29 @@ type LoginProps = {
 
 type LoginState = {
   name: string
-  password: string
+  password: string,
+  error: string | null
 }
 
 const submit = (vm: Login, event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault()
   const { dispatch } = vm.props
   const { name, password } = vm.state
+  vm.setState({ error: null })
   dispatch(login({ name, password }))
 }
 
 class Login extends Component<LoginProps, LoginState> {
   constructor(props: LoginProps) {
     super(props)
-    this.state = { name: '', password: '' }
+    this.state = { name: '', password: '', error: null }
   }
 
   render() {
+    const { error } = this.state
     return (
       <form onSubmit={e => submit(this, e)}>
+        {error && <p className="error">{{error}}</p>}
         <label>
           name
           <input
