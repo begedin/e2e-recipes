@@ -19,5 +19,6 @@ describe('Login', () => {
     cy.get('input[type="password"]').clear().type('improperPassword');
     cy.get('button').click();
     cy.url().should('contain', 'login');
+    cy.get('.error').should('exist');
   });
 });

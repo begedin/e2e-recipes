@@ -4,11 +4,23 @@
       <router-link v-if="!$store.state.authenticated" to="/register">Register</router-link>
       <router-link v-if="!$store.state.authenticated" to="/login">Login</router-link>
       <router-link v-if="$store.state.authenticated" to="/">Todos</router-link>
-      <button v-if="$store.state.authenticated" @click="$store.dispatch('logout')">Log Out</button>
+      <button v-if="$store.state.authenticated" @click="logout">Log Out</button>
     </nav>
+    <div class="error" v-if="$store.state.error">{{$store.state.error}}</div>
     <router-view class="content" />
   </main>
 </template>
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+
+@Component({ name: 'app' })
+export default class App extends Vue {
+  async logout() {
+    await this.$store.dispatch('logout');
+    this.$router.push('/login');
+  }
+}
+</script>
 <style lang="scss">
 $color1: #f3f3f3;
 $color2: #86c4ba;
@@ -116,6 +128,11 @@ button:active {
 h3 {
   text-align: center;
   text-transform: uppercase;
+}
+
+.error {
+  color: $color4;
+  font-weight: bold;
 }
 
 </style>
