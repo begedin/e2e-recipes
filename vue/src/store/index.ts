@@ -7,28 +7,42 @@ Vue.use(Vuex);
 
 export type State = {
   authenticated: boolean
-  user: User | null
+  error: string | null
   todos: Todo[]
+  user: User | null
 }
 
 const rootState: State = {
   authenticated: !!localStorage.getItem('token'),
-  user: null,
+  error: null,
   todos: [],
+  user: null,
 };
 
 const actions: ActionTree<State, State> = {
   async register({ commit, dispatch }, { name, password }) {
-    const { data } = await post<User>('users', { user: { name, password } });
-    await dispatch('login', { name, password });
-    commit('SET_USER', data);
+    commit('SET_ERROR', null);
+
+    try {
+      const { data } = await post<User>('users', { user: { name, password } });
+      await dispatch('login', { name, password });
+      commit('SET_USER', data);
+    } catch (e) {
+      commit('SET_ERROR', 'Invalid credentials');
+    }
   },
 
   async login({ commit }, { name, password }) {
+    commit('SET_ERROR', null);
     const login = { name, password };
-    const { data: token } = await post<string>('login', { login });
-    localStorage.setItem('token', token);
-    commit('SET_AUTHENTICATED', true);
+
+    try {
+      const { data: token } = await post<string>('login', { login });
+      localStorage.setItem('token', token);
+      commit('SET_AUTHENTICATED', true);
+    } catch (e) {
+      commit('SET_ERROR', 'Invalid credentials');
+    }
   },
 
   async logout({ commit }) {
@@ -72,6 +86,10 @@ const mutations: MutationTree<State> = {
   REMOVE_TODO(state, todo: Todo) {
     const index = state.todos.indexOf(todo);
     if (index > -1) { state.todos.splice(index, 1); }
+  },
+
+  SET_ERROR(state, error: State['error']) {
+    state.error = error;
   },
 };
 

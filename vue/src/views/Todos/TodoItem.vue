@@ -24,5 +24,6 @@ export default class TodoItem extends Vue {
   display: grid;
   align-items: center;
   grid-template-columns: 1fr auto;
+  column-gap: .5em;
 }
 </style>

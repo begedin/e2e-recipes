@@ -24,7 +24,7 @@ export default class Login extends Vue {
   async login() {
     const { name, password } = this;
     await this.$store.dispatch('login', { name, password });
-    this.$router.push('/');
+    if (this.$store.state.authenticated) { this.$router.push('/'); }
   }
 }
 </script>
