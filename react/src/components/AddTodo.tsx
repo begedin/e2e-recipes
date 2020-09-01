@@ -33,6 +33,7 @@ class AddTodo extends Component<AddTodoProps, AddTodoState> {
           <input
             type="text"
             onChange={e => this.setState({ title: e.currentTarget.value })}
+            placeholder="New todo"
             value={this.state.title}
           />
         </label>

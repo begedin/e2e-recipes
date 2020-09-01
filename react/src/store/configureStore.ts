@@ -10,8 +10,9 @@ export default function configureStore() {
     rootReducer,
     {
       authenticated: !!window.localStorage.getItem('token'),
+      error: null,
       isFetching: false,
-      todos: []
+      todos: [],
     },
     applyMiddleware(thunkMiddleware, loggerMiddleware)
   )

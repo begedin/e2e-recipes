@@ -9,6 +9,9 @@ export default class AppModel {
     todos: Selector('a').withText('TODOS'),
     logoutButton: Selector('button').withText('LOG OUT')
   }
+
+  error = Selector('.error')
+
   register = {
     nameField: Selector('input[type=text]'),
     passwordField: Selector('input[type=password]'),
