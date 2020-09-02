@@ -25,14 +25,30 @@ describe('Register', () => {
     expect(await page.currentUrl()).not.toContain('register');
   });
 
+  it('errors if invalid data', async () => {
+    await page.navigateTo();
+    await page.navigation.register.click();
+    expect(await page.currentUrl()).toContain('register');
+
+    expect(await page.error.isPresent()).toBe(false);
+    await page.register.submit.click();
+
+    expect(await page.currentUrl()).toContain('register');
+    expect(await page.error.isPresent()).toBe(true);
+  });
+
   afterEach(async (done) => {
     // Assert that there are no errors emitted from the browser
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
-    expect(logs).not.toContain(
-      jasmine.objectContaining({
-        level: logging.Level.SEVERE,
-      } as logging.Entry)
-    );
+    expect(
+      logs.some(
+        (l) =>
+          l.level === logging.Level.SEVERE &&
+          !l.message.includes(
+            'http://localhost:4000/api/users - Failed to load resource'
+          )
+      )
+    ).toBe(false);
 
     await checkinSandbox(sandboxId);
     await browser.executeScript('window.localStorage.clear();');

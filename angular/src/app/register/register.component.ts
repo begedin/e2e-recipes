@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { register } from '../store';
+import { register, state } from '../store';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +18,8 @@ export class RegisterComponent implements OnInit {
 
   async register(): Promise<void> {
     await register(this.name, this.password);
-    this.router.navigate(['/']);
+    if (state.authenticated) {
+      this.router.navigate(['/']);
+    }
   }
 }
