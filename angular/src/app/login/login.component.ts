@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { login } from '../store';
+import { login, state } from '../store';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
 
   async login(): Promise<void> {
     await login(this.name, this.password);
-    this.router.navigate(['/']);
+    if (state.authenticated) {
+      this.router.navigate(['/']);
+    }
   }
 }

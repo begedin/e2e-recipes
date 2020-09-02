@@ -25,14 +25,29 @@ describe('Login', () => {
     expect(await page.currentUrl()).not.toContain('login');
   });
 
+  it('errors if invalid credentials', async () => {
+    await page.navigateTo();
+    await page.login.name.sendKeys('Joe');
+    await page.login.password.sendKeys('password');
+    expect(await page.error.isPresent()).toBe(false);
+    await page.login.submit.click();
+
+    expect(await page.currentUrl()).toContain('login');
+    expect(await page.error.isPresent()).toBe(true);
+  });
+
   afterEach(async (done) => {
     // Assert that there are no errors emitted from the browser
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
-    expect(logs).not.toContain(
-      jasmine.objectContaining({
-        level: logging.Level.SEVERE,
-      } as logging.Entry)
-    );
+    expect(
+      logs.some(
+        (l) =>
+          l.level === logging.Level.SEVERE &&
+          !l.message.includes(
+            'http://localhost:4000/api/login - Failed to load resource'
+          )
+      )
+    ).toBe(false);
     await checkinSandbox(sandboxId);
     await browser.executeScript('window.localStorage.clear();');
 

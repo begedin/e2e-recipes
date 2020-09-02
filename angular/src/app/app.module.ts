@@ -10,6 +10,7 @@ import { TodosComponent } from './todos/todos.component';
 import { TodoComponent } from './todos/todo/todo.component';
 import { NewTodoComponent } from './todos/new-todo/new-todo.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { NavigationComponent } from './navigation/navigation.component';
     RegisterComponent,
     TodoComponent,
     TodosComponent,
+    ErrorComponent,
   ],
   imports: [AppRoutingModule, BrowserModule, FormsModule],
 

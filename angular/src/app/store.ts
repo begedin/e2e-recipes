@@ -14,10 +14,12 @@ export type User = {
 type State = {
   authenticated: boolean;
   todos: Todo[];
+  error: string | null;
 };
 
 export const state: State = {
   authenticated: !!localStorage.getItem('token'),
+  error: null,
   todos: [],
 };
 
@@ -27,17 +29,27 @@ export const logout = () => {
 };
 
 export const login = async (name: string, password: string) => {
-  const { data: token } = await post<string>('login', {
-    login: { name, password },
-  });
-  localStorage.setItem('token', token);
-  state.authenticated = true;
+  state.error = null;
+  try {
+    const { data: token } = await post<string>('login', {
+      login: { name, password },
+    });
+    localStorage.setItem('token', token);
+    state.authenticated = true;
+  } catch (e) {
+    state.error = 'Invalid credentials';
+  }
 };
 
 export const register = async (name: string, password: string) => {
-  const response = await post<User>('users', { user: { name, password } });
-  if ('data' in response) {
-    return login(name, password);
+  state.error = null;
+  try {
+    const response = await post<User>('users', { user: { name, password } });
+    if ('data' in response) {
+      return login(name, password);
+    }
+  } catch (e) {
+    state.error = 'Invalid credentials';
   }
 };
 

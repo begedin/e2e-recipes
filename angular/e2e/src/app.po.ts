@@ -6,6 +6,8 @@ export class AppPage {
     register: element(by.linkText('REGISTER')),
   };
 
+  error = element(by.css('.error'));
+
   login = {
     name: element(by.css('input[type=text]')),
     password: element(by.css('input[type=password]')),
