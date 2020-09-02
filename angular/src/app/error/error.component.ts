@@ -9,7 +9,7 @@ import { state } from '../store';
 export class ErrorComponent implements OnInit {
   constructor() {}
 
-  get error() {
+  get error(): typeof state['error'] {
     return state.error;
   }
 
