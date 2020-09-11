@@ -14,7 +14,7 @@ defmodule E2E.MixProject do
       deps: deps(),
       preferred_cli_env: [
         ci: :test,
-        integration: :test,
+        acceptance: :test,
         test: :test
       ]
     ]
@@ -75,17 +75,17 @@ defmodule E2E.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"],
-      integration: [
+      acceptance: [
         "frontend build",
         "ecto.create --quiet",
         "ecto.migrate",
-        "cmd 'E2E=1 mix test --include integration'"
+        "cmd 'E2E=1 mix test --include acceptance'"
       ],
       ci: [
         "frontend build",
         "ecto.create --quiet",
         "ecto.migrate",
-        "cmd 'E2E=1 HEADLESS=1 mix test --include integration'"
+        "cmd 'E2E=1 HEADLESS=1 mix test --include acceptance'"
       ],
       frontend: [~s[cmd "cd assets; npm run $!"]]
     ]

@@ -1,10 +1,10 @@
-defmodule E2E.Integration.LoginTest do
+defmodule E2E.Acceptance.LoginTest do
   @moduledoc false
 
   use E2E.E2ECase
   import E2E.Factory
 
-  @moduletag :integration
+  @moduletag :acceptance
 
   feature "signs up with correct credentials", %{session: session} do
     user = insert(:user)

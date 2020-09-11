@@ -1,11 +1,11 @@
-defmodule E2E.Integration.TodoTest do
+defmodule E2E.Acceptance.TodoTest do
   @moduledoc false
 
   use E2E.E2ECase
   import E2E.Factory
   alias E2E.{Repo, Todos}
 
-  @moduletag :integration
+  @moduletag :acceptance
 
   defp login(session, name, password) do
     session
