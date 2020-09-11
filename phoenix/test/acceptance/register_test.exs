@@ -1,11 +1,11 @@
-defmodule E2E.Integration.RegisterTest do
+defmodule E2E.Acceptance.RegisterTest do
   @moduledoc false
 
   use E2E.E2ECase
 
   alias E2E.{Accounts, Repo}
 
-  @moduletag :integration
+  @moduletag :acceptance
 
   feature "registers account", %{session: session} do
     session
