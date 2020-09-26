@@ -1,2 +1,7 @@
-Todos
-{{outlet}}
+{{model.length}}
+{{#each this.model as |todo|}}
+<div class="todo">
+  <label>{{todo.title}}</label>
+  <button {{action 'remove' todo}}>Remove</button>
+</div>
+{{/each}}

@@ -4,6 +4,7 @@ import { post } from 'todo/helpers/api';
 
 export default class Session extends Service.extend({}) {
   authenticated: boolean = !!localStorage.getItem('token');
+  token: string | null = localStorage.getItem('token');
   error: string | null = null;
 
   async authenticate(name: string, password: string) {
@@ -15,6 +16,7 @@ export default class Session extends Service.extend({}) {
       });
       localStorage.setItem('token', token);
       set(this, 'authenticated', true);
+      set(this, 'token', token);
     } catch (e) {
       set(this, 'error', 'Invalid credentials');
     }

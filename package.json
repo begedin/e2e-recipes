@@ -11,6 +11,7 @@
     "lint:react": "(cd react; npm run lint)",
     "lint:vue": "(cd vue; npm run lint)",
     "start:angular": "(cd angular; ng serve --open)",
+    "start:ember": "(cd ember; npm run start)",
     "start:phoenix": "(cd phoenix; mix phx.server)",
     "start:react": "(cd react; npm run start)",
     "start:vue": "(cd vue; npm run serve)",
