@@ -5,3 +5,7 @@
   <button {{action 'remove' todo}}>Remove</button>
 </div>
 {{/each}}
+<form class="new-todo" {{action 'create' title on='submit'}}>
+  {{input type="text" required=true value=title placeholder='New todo' }}
+  <button type="submit">Add</button>
+</form>

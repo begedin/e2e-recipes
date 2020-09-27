@@ -1,12 +1,21 @@
 import JSONAPISerializer from '@ember-data/serializer/json-api';
 import Store from '@ember-data/store';
 import Model from '@ember-data/model';
+import DS from 'ember-data';
+import {} from '@ember/string';
 
 const convert = (data: { id: number }, type: string | number) => ({
   attributes: { ...data },
   id: data.id,
   type,
 });
+
+type JSONApiFormat = {
+  data: {
+    attributes: object;
+    type: string;
+  };
+};
 
 export default class Application extends JSONAPISerializer.extend({}) {
   normalizeResponse(
@@ -22,6 +31,16 @@ export default class Application extends JSONAPISerializer.extend({}) {
           ? resourceHash.data.map((d) => convert(d, type))
           : convert(resourceHash.data, type),
     };
+  }
+
+  serialize(snapshot: DS.Snapshot, options: object) {
+    const json = super.serialize(snapshot, options) as JSONApiFormat;
+    const type = snapshot.modelName;
+    const {
+      data: { attributes },
+    } = json;
+    console.log(attributes, type);
+    return { [type]: attributes };
   }
 }
 

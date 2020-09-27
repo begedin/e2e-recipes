@@ -5,13 +5,22 @@ import Model from '@ember-data/model';
 export default class Todos extends Controller.extend({}) {
   @action
   remove(todo: Model) {
-    console.log('action', todo);
     todo.destroyRecord();
     todo.unloadRecord();
   }
+
+  @action
+  async create(title: string) {
+    console.log('create', title);
+    const todo = this.store.createRecord('todo', { title });
+    try {
+      await todo.save();
+    } catch (e) {
+      todo.destroyRecord();
+    }
+  }
 }
 
-// DO NOT DELETE: this is how TypeScript knows how to look up your controllers.
 declare module '@ember/controller' {
   interface Registry {
     todos: Todos;
