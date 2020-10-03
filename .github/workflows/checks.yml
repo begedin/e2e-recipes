@@ -140,7 +140,7 @@ jobs:
       with:
         path: ember/node_modules
         key: ${{ runner.os }}-mix-${{ hashFiles('ember/package-lock.json') }}
-        restore-keys: ${{ runner.os }}-ember-cache-
+        restore-keys: ${{ runner.os }}-ember-cache-${{ env.cachev }}-
 
     - name: Fetch ember deps
       if: steps.ember-cache.outputs.cache-hit != 'true'
