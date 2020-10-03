@@ -8,7 +8,10 @@ export default class Login extends Controller.extend({}) {
 
   @action
   async login(name: string, password: string) {
-    await this.session.authenticate(name, password);
+    const login = await this.store
+      .createRecord('login', { name, password })
+      .save();
+    await this.session.authenticate(login.token);
     if (this.session.authenticated) {
       this.transitionToRoute('todos');
     }

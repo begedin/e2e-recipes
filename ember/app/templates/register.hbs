@@ -1,2 +1,18 @@
-Register
-{{outlet}}
+{{#if this.error}}
+<p class='error'>
+  {{this.error}}
+</p>
+{{/if}}
+<form class='register' {{action 'register' name password on='submit'}}>
+  <label>
+    Username
+    {{input type='text' required=true value=name}}
+  </label>
+  <label>
+    Password
+    {{input type='password' required=true value=password}}
+  </label>
+  <button type='submit'>
+    Register
+  </button>
+</form>

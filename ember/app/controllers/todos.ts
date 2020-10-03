@@ -1,23 +1,22 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
-import Model from '@ember-data/model';
+import { set } from '@ember/object';
+
+import Todo from 'todo/models/todo';
 
 export default class Todos extends Controller.extend({}) {
   @action
-  remove(todo: Model) {
-    todo.destroyRecord();
-    todo.unloadRecord();
+  async remove(todo: Todo) {
+    await todo.destroyRecord();
   }
+
+  title: string = '';
 
   @action
   async create(title: string) {
-    console.log('create', title);
-    const todo = this.store.createRecord('todo', { title });
-    try {
-      await todo.save();
-    } catch (e) {
-      todo.destroyRecord();
-    }
+    const todo = await this.store.createRecord('todo', { title });
+    await todo.save();
+    set(this, 'title', '');
   }
 }
 

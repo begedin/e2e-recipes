@@ -1,12 +1,18 @@
-{{#if error}}<p class="error">{{error}}</p>{{/if}}
-<form class="login" {{action 'login' name password on='submit'}}>
+{{#if error}}
+<p class='error'>
+  {{error}}
+</p>
+{{/if}}
+<form class='login' {{action 'login' name password on='submit'}}>
   <label>
     Login
-    {{input type="text" required=true value=name }}
+    {{input type='text' required=true value=name}}
   </label>
   <label>
     Password
-    {{input type="password" required=true value=password }}
+    {{input type='password' required=true value=password}}
   </label>
-  <button type="submit">Login</button>
+  <button type='submit'>
+    Login
+  </button>
 </form>

@@ -1,25 +1,30 @@
 import Service from '@ember/service';
 import { set } from '@ember/object';
-import { post } from 'todo/helpers/api';
+import { inject as service } from '@ember/service';
+import Store from '@ember-data/store';
 
 export default class Session extends Service.extend({}) {
   authenticated: boolean = !!localStorage.getItem('token');
   token: string | null = localStorage.getItem('token');
   error: string | null = null;
 
-  async authenticate(name: string, password: string) {
-    set(this, 'error', null);
+  @service store!: Store;
 
-    try {
-      const { data: token } = await post<string>('login', {
-        login: { name, password },
-      });
-      localStorage.setItem('token', token);
-      set(this, 'authenticated', true);
-      set(this, 'token', token);
-    } catch (e) {
-      set(this, 'error', 'Invalid credentials');
-    }
+  constructor() {
+    super();
+  }
+
+  init() {
+    super.init();
+    set(this, 'token', localStorage.getItem('token'));
+    set(this, 'authenticated', !!localStorage.getItem('token'));
+  }
+
+  async authenticate(token: string) {
+    set(this, 'error', null);
+    localStorage.setItem('token', token);
+    set(this, 'authenticated', true);
+    set(this, 'token', token);
   }
 
   async logout() {

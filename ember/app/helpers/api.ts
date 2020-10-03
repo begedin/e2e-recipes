@@ -1,9 +1,11 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 const client = () => {
+  const sandbox = localStorage.getItem('sandbox');
   const token = window.localStorage.getItem('token');
   const headers = {
     ...(token && { Authorization: `Bearer ${token}` }),
+    ...(sandbox && { sandbox }),
   };
 
   const config: AxiosRequestConfig = {
