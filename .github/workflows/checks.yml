@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  cachev: 1
+
 jobs:
   build_and_test:
     name: Build and test everything
@@ -36,7 +39,6 @@ jobs:
       with:
         node-version: 12.8.0
 
-
     - name: Restore elixir backend cache
       id: elixir-cache
       uses: actions/cache@v2
@@ -46,7 +48,7 @@ jobs:
           phoenix/_build
           phoenix/priv/plts
         key: ${{ runner.os }}-mix-${{ hashFiles('phoenix/mix.lock') }}
-        restore-keys: ${{ runner.os }}-elixir-cache-
+        restore-keys: ${{ runner.os }}-elixir-cache-${{ env.cachev }}-
 
     - name: Elixir backend deps/build
       if: steps.elixir-cache.outputs.cache-hit != 'true'
@@ -58,7 +60,7 @@ jobs:
       with:
         path: phoenix/assets/node_modules
         key: ${{ runner.os }}-mix-${{ ('phoenix/assets/package-lock.json') }}
-        restore-keys: ${{ runner.os }}-elixir-frontend-cache-
+        restore-keys: ${{ runner.os }}-elixir-frontend-cache-${{ env.cachev }}-
 
     - name: Fetch elixir frontend deps
       if: steps.elixir-frontend-cache.outputs.cache-hit != 'true'
@@ -82,7 +84,7 @@ jobs:
       with:
         path: angular/node_modules
         key: ${{ runner.os }}-mix-${{ hashFiles('angular/package-lock.json') }}
-        restore-keys: ${{ runner.os }}-angular-cache-
+        restore-keys: ${{ runner.os }}-angular-cache-${{ env.cachev }}-
 
     - name: Fetch angular deps
       if: steps.angular-cache.outputs.cache-hit != 'true'
@@ -102,7 +104,7 @@ jobs:
           vue/node_modules
           /home/runner/.cache/Cypress
         key: ${{ runner.os }}-mix-${{ hashFiles('vue/package-lock.json') }}
-        restore-keys: ${{ runner.os }}-vue-cache-v3-
+        restore-keys: ${{ runner.os }}-vue-cache-${{ env.cachev }}-
 
     - name: Fetch vue deps
       if: steps.vue-cache.outputs.cache-hit != 'true'
@@ -120,7 +122,7 @@ jobs:
       with:
         path: react/node_modules
         key: ${{ runner.os }}-mix-${{ hashFiles('react/package-lock.json') }}
-        restore-keys: ${{ runner.os }}-react-cache-
+        restore-keys: ${{ runner.os }}-react-cache-${{ env.cachev }}-
 
     - name: Fetch react deps
       if: steps.react-cache.outputs.cache-hit != 'true'
