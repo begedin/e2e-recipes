@@ -1,0 +1,20 @@
+<nav>
+  {{#if this.session.authenticated}}
+  <LinkTo @route='todos'>
+    Todos
+  </LinkTo>
+  <button type='button' {{action 'logout'}}>
+    Log Out
+  </button>
+  {{else}}
+  <LinkTo @route='login'>
+    Login
+  </LinkTo>
+  <LinkTo @route='register'>
+    Register
+  </LinkTo>
+  {{/if}}
+</nav>
+<main>
+  {{outlet}}
+</main>
