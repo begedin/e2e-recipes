@@ -50,6 +50,7 @@
     "ember-cli-dependency-checker": "^3.2.0",
     "ember-cli-htmlbars": "^5.3.1",
     "ember-cli-inject-live-reload": "^2.0.2",
+    "ember-cli-sass": "^10.0.1",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.0",
     "ember-cli-typescript": "^4.0.0",
@@ -73,6 +74,7 @@
     "pretender": "^3.4.3",
     "prettier": "^2.1.2",
     "qunit-dom": "^1.4.0",
+    "sass": "^1.26.11",
     "typescript": "^4.0.3"
   },
   "engines": {
