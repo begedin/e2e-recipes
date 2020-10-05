@@ -1,0 +1,124 @@
+input,
+button {
+  appearance: none;
+  padding: 0.75em;
+}
+
+button,
+button:hover,
+button:active {
+  border: none;
+}
+
+$color1: #f1f1e8;
+$color2: #ee6f57;
+$color3: #81b214;
+$color4: #206a5d;
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-size: 16pt;
+  font-family: sans-serif;
+  background: $color1;
+  display: grid;
+  grid-auto-flow: row;
+  align-content: center;
+  row-gap: 1em;
+  justify-content: center;
+}
+
+@mixin button {
+  background: $color2;
+  border-radius: 0.2em;
+  color: $color1;
+  cursor: pointer;
+  display: block;
+  font-size: 100%;
+  font-weight: bold;
+  padding: 0.75em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition-property: background, box-shadow;
+  transition: all 0.2s ease;
+
+  &:hover,
+  &:active {
+    background: $color3;
+    color: $color1;
+    box-shadow: 0px 7px 20px 5px rgba($color2, 0.3),
+      0px 7px 2px -5px rgba($color3, 0.2);
+  }
+}
+
+nav {
+  padding: 0;
+  display: grid;
+  grid-auto-flow: column;
+  column-gap: 1em;
+  justify-content: center;
+
+  a {
+    @include button;
+  }
+}
+
+form {
+  display: grid;
+  grid-auto-flow: row;
+  justify-content: center;
+  row-gap: 1em;
+
+  label {
+    display: grid;
+    grid-auto-flow: row;
+    justify-content: start;
+    row-gap: .5em;
+  }
+
+  input,
+  button {
+    display: block;
+  }
+}
+
+button {
+  @include button;
+}
+
+h3 {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.todos {
+  display: grid;
+  grid-auto-flow: row;
+  row-gap: 0.5em;
+
+}
+
+.todo {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr auto;
+
+  border: 2px solid $color2;
+  border-radius: 5px;
+  padding: 0.5em;
+
+  div {
+    text-align: center;
+    color: $color2;
+    font-weight: bold;
+  }
+}
+
+.error {
+  color: $color4;
+  text-align: center;
+}

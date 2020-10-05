@@ -1,10 +1,13 @@
-{{#each this.model as |todo|}}
-<div class='todo'>
-  <label>{{todo.title}}</label>
-  <button type='button' {{action 'remove' todo}}>Remove</button>
+<h3>Todos</h3>
+<div class='todos'>
+  {{#each this.model as |todo|}}
+  <div class='todo'>
+    <label>{{todo.title}}</label>
+    <button type='button' {{action 'remove' todo}}>Remove</button>
+  </div>
+  {{/each}}
+  <form class='new-todo' {{action 'create' title on='submit'}}>
+    {{input type='text' required=true value=title placeholder='New todo'}}
+    <button type='submit'>Add</button>
+  </form>
 </div>
-{{/each}}
-<form class='new-todo' {{action 'create' title on='submit'}}>
-  {{input type='text' required=true value=title placeholder='New todo'}}
-  <button type='submit'>Add</button>
-</form>
