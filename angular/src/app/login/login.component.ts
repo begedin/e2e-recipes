@@ -8,10 +8,10 @@ import { login, state } from '../store';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private route: ActivatedRoute, private router: Router) {}
-
   name = '';
   password = '';
+
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {}
 

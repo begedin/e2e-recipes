@@ -7,10 +7,10 @@ import { Todo, deleteTodo } from 'src/app/store';
   styleUrls: ['./todo.component.scss'],
 })
 export class TodoComponent implements OnInit {
-  constructor() {}
-
   @Input()
   todo: Todo;
+
+  constructor() {}
 
   ngOnInit(): void {}
 

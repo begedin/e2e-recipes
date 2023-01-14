@@ -9,11 +9,11 @@ import { fetchTodos, state, Todo } from '../store';
 export class TodosComponent implements OnInit {
   constructor() {}
 
-  ngOnInit(): void {
-    fetchTodos();
-  }
-
   get todos(): Todo[] {
     return state.todos;
+  }
+
+  ngOnInit(): void {
+    fetchTodos();
   }
 }

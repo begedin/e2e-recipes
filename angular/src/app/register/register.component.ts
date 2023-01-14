@@ -9,10 +9,10 @@ import { register, state } from '../store';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  constructor(private route: ActivatedRoute, private router: Router) {}
-
   name = '';
   password = '';
+
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {}
 

@@ -7,9 +7,9 @@ import { createTodo } from 'src/app/store';
   styleUrls: ['./new-todo.component.scss'],
 })
 export class NewTodoComponent implements OnInit {
-  constructor() {}
-
   title = '';
+
+  constructor() {}
 
   ngOnInit(): void {}
 

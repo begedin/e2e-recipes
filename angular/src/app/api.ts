@@ -26,6 +26,7 @@ const client = () => {
   const token = window.localStorage.getItem('token');
   const sandbox = getSandboxCookie();
   const headers = {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     ...(token && { Authorization: `Bearer ${token}` }),
     ...(sandbox && { sandbox }),
   };
@@ -39,17 +40,17 @@ const client = () => {
   return axios.create(config);
 };
 
-export const post = async <T = any>(url: string, data: {}) => {
+export const post = async <T = any>(url: string, data: object) => {
   const response = await client().post(url, data);
   return response.data as { data: T };
 };
 
-export const get = async <T = any>(url: string, params: {} = {}) => {
+export const get = async <T = any>(url: string, params: object = {}) => {
   const response = await client().get(url, { params });
   return response.data as { data: T };
 };
 
-export const remove = async <T = any>(url: string, params: {} = {}) => {
+export const remove = async <T = any>(url: string, params: object = {}) => {
   const response = await client().delete(url, { params });
   return response.data as { data: T };
 };
