@@ -8,7 +8,7 @@ defmodule E2E.MixProject do
       version: "0.1.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
@@ -39,21 +39,21 @@ defmodule E2E.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:cors_plug, "~> 2.0"},
-      {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-      {:ecto_sql, "~> 3.4.3"},
-      {:ex_machina, "~> 2.4", only: [:test, :e2e]},
-      {:gettext, "~> 0.15.0"},
-      {:jason, "~> 1.0"},
-      {:phoenix_ecto, "~> 4.1.0"},
-      {:phoenix_html, "~> 2.14.2"},
-      {:phoenix_live_reload, "~> 1.2", only: [:dev]},
-      {:phoenix_pubsub, "~> 2.0.0"},
-      {:phoenix, "~> 1.5.3"},
-      {:plug_cowboy, "~> 2.3.0"},
-      {:postgrex, "0.15.3"},
-      {:wallaby, "~> 0.26.0", runtime: false, only: :test}
+      {:cors_plug, "~> 3.0"},
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.2", only: [:dev], runtime: false},
+      {:ecto_sql, "~> 3.9"},
+      {:ex_machina, "~> 2.7", only: [:test, :e2e]},
+      {:gettext, "~> 0.21.0"},
+      {:jason, "~> 1.4"},
+      {:phoenix_ecto, "~> 4.4"},
+      {:phoenix_html, "~> 3.2"},
+      {:phoenix_live_reload, "~> 1.4", only: [:dev]},
+      {:phoenix_pubsub, "~> 2.1"},
+      {:phoenix, "~> 1.6"},
+      {:plug_cowboy, "~> 2.6"},
+      {:postgrex, "~> 0.16"},
+      {:wallaby, "~> 0.30", runtime: false, only: :test}
     ]
   end
 
