@@ -9,6 +9,12 @@ on:
 env:
   cachev: 1
 
+# make sure new pushes to PR branch cancel in progress workflow runs for this PR
+# the || github.ref at the end ensures the opposite on merges to master
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build_and_test:
     name: Build and test everything
