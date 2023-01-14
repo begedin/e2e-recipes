@@ -2,9 +2,9 @@ name: Elixir CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 env:
   cachev: 1
@@ -16,7 +16,7 @@ jobs:
     services:
       db:
         image: postgres:11
-        ports: ['5432:5432']
+        ports: ["5432:5432"]
         env:
           POSTGRES_PASSWORD: postgres
         options: >-
@@ -25,130 +25,126 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Set up Elixir
-      uses: actions/setup-elixir@v1
-      with:
-        elixir-version: '1.10.4' # Define the elixir version [required]
-        otp-version: '23.0' # Define the OTP version [required]
+      - name: Set up Elixir
+        uses: erlef/setup-elixir@v1
+        with:
+          elixir-version: "1.14"
+          otp-version: "25"
 
-    - name: Setup node
-      uses: actions/setup-node@v2.1.1
-      with:
-        node-version: 12.8.0
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 12.8.0
 
-    - name: Restore elixir backend cache
-      id: elixir-cache
-      uses: actions/cache@v2
-      with:
-        path: |
-          phoenix/deps
-          phoenix/_build
-          phoenix/priv/plts
-        key: ${{ runner.os }}-mix-${{ hashFiles('phoenix/mix.lock') }}
-        restore-keys: ${{ runner.os }}-elixir-cache-${{ env.cachev }}-
+      - name: Restore elixir backend cache
+        id: elixir-cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            phoenix/deps
+            phoenix/_build
+            phoenix/priv/plts
+          key: ${{ runner.os }}-mix-${{ hashFiles('phoenix/mix.lock') }}
+          restore-keys: ${{ runner.os }}-elixir-cache-${{ env.cachev }}-
 
-    - name: Elixir backend deps/build
-      if: steps.elixir-cache.outputs.cache-hit != 'true'
-      run: (cd phoenix; mix deps.get)
+      - name: Elixir backend deps/build
+        if: steps.elixir-cache.outputs.cache-hit != 'true'
+        run: (cd phoenix; mix deps.get)
 
-    - name: Restore elixir frontend cache
-      id: elixir-frontend-cache
-      uses: actions/cache@v2
-      with:
-        path: phoenix/assets/node_modules
-        key: ${{ runner.os }}-mix-${{ ('phoenix/assets/package-lock.json') }}
-        restore-keys: ${{ runner.os }}-elixir-frontend-cache-${{ env.cachev }}-
+      - name: Restore elixir frontend cache
+        id: elixir-frontend-cache
+        uses: actions/cache@v3
+        with:
+          path: phoenix/assets/node_modules
+          key: ${{ runner.os }}-mix-${{ ('phoenix/assets/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-elixir-frontend-cache-${{ env.cachev }}-
 
-    - name: Fetch elixir frontend deps
-      if: steps.elixir-frontend-cache.outputs.cache-hit != 'true'
-      run: (cd phoenix/assets; npm i)
+      - name: Fetch elixir frontend deps
+        if: steps.elixir-frontend-cache.outputs.cache-hit != 'true'
+        run: (cd phoenix/assets; npm i)
 
-    - name: Lint elixir (credo)
-      run: npm run lint:phoenix:credo
+      - name: Lint elixir (credo)
+        run: npm run lint:phoenix:credo
 
-    - name: Lint elixir (formatter)
-      run: npm run lint:phoenix:formatter
+      - name: Lint elixir (formatter)
+        run: npm run lint:phoenix:formatter
 
-    - name: Lint elixir (dialyzer)
-      run: npm run lint:phoenix:dialyzer
+      - name: Lint elixir (dialyzer)
+        run: npm run lint:phoenix:dialyzer
 
-    - name: Run Elixir E2E tests
-      run: npm run test:ci:phoenix
+      - name: Run Elixir E2E tests
+        run: npm run test:ci:phoenix
 
-    - name: Restore angular cache
-      id: angular-cache
-      uses: actions/cache@v2
-      with:
-        path: angular/node_modules
-        key: ${{ runner.os }}-mix-${{ hashFiles('angular/package-lock.json') }}
-        restore-keys: ${{ runner.os }}-angular-cache-${{ env.cachev }}-
+      - name: Restore angular cache
+        id: angular-cache
+        uses: actions/cache@v3
+        with:
+          path: angular/node_modules
+          key: ${{ runner.os }}-mix-${{ hashFiles('angular/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-angular-cache-${{ env.cachev }}-
 
-    - name: Fetch angular deps
-      if: steps.angular-cache.outputs.cache-hit != 'true'
-      run: (cd angular; npm i)
+      - name: Fetch angular deps
+        if: steps.angular-cache.outputs.cache-hit != 'true'
+        run: (cd angular; npm i)
 
-    - name: Lint Angular
-      run: npm run lint:angular
+      - name: Lint Angular
+        run: npm run lint:angular
 
-    - name: Run Angular E2E tests
-      run: npm run test:ci:angular
+      - name: Run Angular E2E tests
+        run: npm run test:ci:angular
 
-    - name: Restore vue cache
-      id: vue-cache
-      uses: actions/cache@v2
-      with:
-        path: |
-          vue/node_modules
-          /home/runner/.cache/Cypress
-        key: ${{ runner.os }}-mix-${{ hashFiles('vue/package-lock.json') }}
-        restore-keys: ${{ runner.os }}-vue-cache-${{ env.cachev }}-
+      - name: Restore vue cache
+        id: vue-cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            vue/node_modules
+            /home/runner/.cache/Cypress
+          key: ${{ runner.os }}-mix-${{ hashFiles('vue/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-vue-cache-${{ env.cachev }}-
 
-    - name: Fetch vue deps
-      if: steps.vue-cache.outputs.cache-hit != 'true'
-      run: (cd vue; npm i)
+      - name: Fetch vue deps
+        if: steps.vue-cache.outputs.cache-hit != 'true'
+        run: (cd vue; npm i)
 
-    - name: Lint Vue
-      run: npm run lint:vue
+      - name: Lint Vue
+        run: npm run lint:vue
 
-    - name: Run Vue E2E tests
-      run: npm run test:ci:vue
+      - name: Run Vue E2E tests
+        run: npm run test:ci:vue
 
-    - name: Restore react cache
-      id: react-cache
-      uses: actions/cache@v2
-      with:
-        path: react/node_modules
-        key: ${{ runner.os }}-mix-${{ hashFiles('react/package-lock.json') }}
-        restore-keys: ${{ runner.os }}-react-cache-${{ env.cachev }}-
+      - name: Restore react cache
+        id: react-cache
+        uses: actions/cache@v3
+        with:
+          path: react/node_modules
+          key: ${{ runner.os }}-mix-${{ hashFiles('react/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-react-cache-${{ env.cachev }}-
 
-    - name: Fetch react deps
-      if: steps.react-cache.outputs.cache-hit != 'true'
-      run: (cd react; npm i)
+      - name: Fetch react deps
+        if: steps.react-cache.outputs.cache-hit != 'true'
+        run: (cd react; npm i)
 
-    - name: Lint React
-      run: npm run lint:react
+      - name: Lint React
+        run: npm run lint:react
 
-    - name: Run React E2E tests
-      run: npm run test:ci:react
+      - name: Run React E2E tests
+        run: npm run test:ci:react
 
-    - name: Restore ember cache
-      id: ember-cache
-      uses: actions/cache@v2
-      with:
-        path: ember/node_modules
-        key: ${{ runner.os }}-mix-${{ hashFiles('ember/package-lock.json') }}
-        restore-keys: ${{ runner.os }}-ember-cache-${{ env.cachev }}-
+      - name: Restore ember cache
+        id: ember-cache
+        uses: actions/cache@v3
+        with:
+          path: ember/node_modules
+          key: ${{ runner.os }}-mix-${{ hashFiles('ember/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-ember-cache-${{ env.cachev }}-
 
-    - name: Fetch ember deps
-      if: steps.ember-cache.outputs.cache-hit != 'true'
-      run: (cd ember; npm i)
+      - name: Fetch ember deps
+        if: steps.ember-cache.outputs.cache-hit != 'true'
+        run: (cd ember; npm i)
 
-    - name: Run Ember E2E tests
-      run: npm run test:ci:ember
-
-
-
-
+      - name: Run Ember E2E tests
+        run: npm run test:ci:ember
