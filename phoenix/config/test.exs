@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 config :phoenix, :plug_init_mode, :runtime
 

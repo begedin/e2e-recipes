@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Configure your database
 config :e2e, E2E.Repo,

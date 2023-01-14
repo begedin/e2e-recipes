@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Reduce bcrypt algorithm complexity in test to speed it up
 
