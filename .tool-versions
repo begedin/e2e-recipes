@@ -1,3 +1,4 @@
 nodejs 19.4.0
 elixir 1.14.3-otp-25
 postgres 15.1
+erlang 25.2
