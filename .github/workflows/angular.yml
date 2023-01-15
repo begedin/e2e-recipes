@@ -84,6 +84,9 @@ jobs:
         if: steps.angular-cache.outputs.cache-hit != 'true'
         run: (cd angular; npm i)
 
+      - name: Run playwright install
+        run: (cd angular; npx playwright install)
+
       - name: Lint Angular
         run: npm run lint:angular
 
