@@ -61,7 +61,7 @@ jobs:
         run: (cd phoenix; mix deps.get; MIX_ENV=test mix do compile)
 
       - name: Setup db
-        run: (cd phoenix; MIX_ENV=test mix ecto.create; mix ecto.migrate)
+        run: (cd phoenix; MIX_ENV=test mix do ecto.create, ecto.migrate)
 
       - name: Restore elixir frontend cache
         id: elixir-frontend-cache
