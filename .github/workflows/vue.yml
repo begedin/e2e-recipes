@@ -68,9 +68,9 @@ jobs:
           key: ${{ runner.os }}-mix-${{ ('phoenix/assets/package-lock.json') }}
           restore-keys: ${{ runner.os }}-elixir-frontend-cache-${{ env.cachev }}-
 
-      - name: Fetch elixir frontend deps
-        if: steps.elixir-frontend-cache.outputs.cache-hit != 'true'
-        run: (cd phoenix/assets; npm i)
+      - name: Fetch backend deps & compile
+        if: steps.elixir-cache.outputs.cache-hit != 'true'
+        run: (cd phoenix; mix deps.get; MIX_ENV=test mix compile)
 
       - name: Restore vue cache
         id: vue-cache
