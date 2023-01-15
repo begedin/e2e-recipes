@@ -35,20 +35,15 @@ For additional actions, move into /vue
   * Run unit tests with `npm run test:unit`
   * Lint and auto-fix with `npm run lint`
 
-## Ember + Pretender
+## Ember + Testem/QUnit
 
-The ember example is using Preteder (via Testem) to run E2E tests
+The ember example is using the default Ember test setup via Testem/Qunit
 
 Run e2e tests from root path with `npm run test:e2e:ember` or `npm run test:e2e:ci:ember`
 Run app with in development with  `npm run start:ember`. Phoenix backend needs to run to.
 
-For additional actions, move into /ember
-
-  * Install dependencies with `npm install`
-  * Compile and hot-reload for dev with `npm run start`
-  * Compile and minify for production with `npm run build`
-  * Run unit tests with `npm run test:unit`
-  * Lint and auto-fix with `npm run lint`
+For additional actions, move into /ember and refer to scripts in package.json as
+well as information in the readme.
 
 
 ## React + Testcafe
