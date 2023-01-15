@@ -1,7 +1,7 @@
 <template>
   <div class="todo">
-    {{todo.title}}
-    <button @click="deleteTodo">Delete</button>
+    {{ todo.title }}
+    <button @click="deleteTodo" type="button">Delete</button>
   </div>
 </template>
 

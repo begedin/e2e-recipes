@@ -1,12 +1,13 @@
+
 <template>
   <main id="app">
     <nav id="nav">
       <router-link v-if="!$store.state.authenticated" to="/register">Register</router-link>
       <router-link v-if="!$store.state.authenticated" to="/login">Login</router-link>
       <router-link v-if="$store.state.authenticated" to="/">Todos</router-link>
-      <button v-if="$store.state.authenticated" @click="logout">Log Out</button>
+      <button v-if="$store.state.authenticated" @click="logout" type="button">Log Out</button>
     </nav>
-    <div class="error" v-if="$store.state.error">{{$store.state.error}}</div>
+    <div class="error" v-if="$store.state.error">{{ $store.state.error }}</div>
     <router-view class="content" />
   </main>
 </template>
@@ -134,5 +135,4 @@ h3 {
   color: $color4;
   font-weight: bold;
 }
-
 </style>
