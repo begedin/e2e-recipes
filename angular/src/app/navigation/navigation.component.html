@@ -2,5 +2,5 @@
   <a *ngIf="!authenticated" routerLink="/login" routerLinkActive="active">Login</a>
   <a *ngIf="!authenticated" routerLink="/register" routerLinkActive="active">Register</a>
   <a *ngIf="authenticated" routerLink="/" routerLinkActive="active">Todos</a>
-  <button *ngIf="authenticated"utton (click)="logout()">Logout</button>
+  <button *ngIf="authenticated" (click)="logout()">Logout</button>
 </nav>

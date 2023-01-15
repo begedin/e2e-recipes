@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit {
 
   async register(): Promise<void> {
     await register(this.name, this.password);
+    console.log('authenticated?', state.authenticated);
     if (state.authenticated) {
       this.router.navigate(['/']);
     }
