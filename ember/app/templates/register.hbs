@@ -3,14 +3,14 @@
   {{this.error}}
 </p>
 {{/if}}
-<form class='register' {{action 'register' name password on='submit'}}>
+<form class='register' {{action 'register' on='submit'}}>
   <label>
     Username
-    {{input type='text' required=true value=name}}
+    {{input type='text' required=true value=this.name}}
   </label>
   <label>
     Password
-    {{input type='password' required=true value=password}}
+    {{input type='password' required=true value=this.password}}
   </label>
   <button type='submit'>
     Register

@@ -1,13 +1,15 @@
-use Mix.Config
+import Config
 
 config :phoenix, :plug_init_mode, :runtime
+
+is_e2e? = System.get_env("E2E") |> Kernel.is_nil() |> Kernel.not()
 
 config :e2e, E2EWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: false,
   check_origin: false,
-  server: System.get_env("E2E") |> Kernel.is_nil() |> Kernel.not()
+  server: is_e2e?
 
 # Configure your database
 config :e2e, E2E.Repo,
@@ -20,7 +22,7 @@ config :e2e, E2E.Repo,
 config :e2e, sql_sandbox: System.get_env("SANDBOX") |> Kernel.is_nil() |> Kernel.not()
 
 # Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, level: if(is_e2e?, do: :debug, else: :warn)
 
 config :wallaby,
   chromedriver: [

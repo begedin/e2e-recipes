@@ -3,14 +3,14 @@
   {{error}}
 </p>
 {{/if}}
-<form class='login' {{action 'login' name password on='submit'}}>
+<form class='login' {{action 'login' on='submit'}}>
   <label>
     Login
-    {{input type='text' required=true value=name}}
+    {{input type='text' required=true value=this.name}}
   </label>
   <label>
     Password
-    {{input type='password' required=true value=password}}
+    {{input type='password' required=true value=this.password}}
   </label>
   <button type='submit'>
     Login

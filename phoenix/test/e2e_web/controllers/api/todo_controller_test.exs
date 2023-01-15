@@ -73,7 +73,7 @@ defmodule E2EWeb.API.TodoControllerTest do
       user = insert(:user)
       path = Routes.api_todo_path(conn, :delete, -1)
 
-      assert json = conn |> authenticate(user) |> delete(path) |> json_response(404)
+      assert conn |> authenticate(user) |> delete(path) |> json_response(404)
     end
 
     test "renders 404 if todo does not belong to user", %{conn: conn} do
@@ -81,7 +81,7 @@ defmodule E2EWeb.API.TodoControllerTest do
       todo = insert(:todo)
       path = Routes.api_todo_path(conn, :delete, todo)
 
-      assert json = conn |> authenticate(user) |> delete(path) |> json_response(404)
+      assert conn |> authenticate(user) |> delete(path) |> json_response(404)
     end
   end
 end

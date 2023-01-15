@@ -34,7 +34,7 @@ export default class Session extends Service.extend({}) {
 }
 
 declare module '@ember/service' {
-  interface Registry {
+  export interface Registry {
     session: Session;
   }
 }

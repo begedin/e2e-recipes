@@ -1,11 +1,4 @@
-# This file is responsible for configuring your application
-# and its dependencies with the aid of the Mix.Config module.
-#
-# This configuration file is loaded before any dependency and
-# is restricted to this project.
-
-# General application configuration
-use Mix.Config
+import Config
 
 config :e2e,
   namespace: E2E,
@@ -16,7 +9,7 @@ config :e2e, E2EWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "xJpwfY1gWDnVYc3qbR1wHe8ZKLcZR2Tx6z+TwsDHJHWeGqS+HPKp+DsADx3JuvhA",
   render_errors: [view: E2EWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: E2E.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: E2E.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,

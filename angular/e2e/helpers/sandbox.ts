@@ -1,19 +1,11 @@
 import { axiosInstance, sandboxAxiosInstance } from './api';
-import { browser } from 'protractor';
+import { type Page } from '@playwright/test';
 
-export const initSandbox = async () => {
+export const initSandbox = async (page: Page) => {
   const { data: sandboxId } = await axiosInstance().post<string>('sandbox');
-  await browser.driver.get(browser.baseUrl);
-  await browser.manage().addCookie({
-    name: 'sandbox',
-    value: sandboxId,
-    path: '/',
-    domain: 'localhost',
-  });
+  page.setExtraHTTPHeaders({ sandbox: sandboxId });
   return sandboxId;
 };
 
-export const checkinSandbox = async (sandboxId: string) => {
-  await browser.manage().deleteCookie('sandbox');
-  return sandboxAxiosInstance(sandboxId).delete('sandbox');
-};
+export const checkinSandbox = async (sandboxId: string) =>
+  sandboxAxiosInstance(sandboxId).delete('sandbox');

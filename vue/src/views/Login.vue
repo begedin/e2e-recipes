@@ -1,34 +1,41 @@
 <template>
-  <form class="login" @submit.prevent="login">
+  <form
+    class="login"
+    @submit.prevent="login"
+  >
     <label>
       Login
-      <input type="text" required v-model="name" />
+      <input
+        v-model="name"
+        type="text"
+        required
+      />
     </label>
     <label>
       Password
-      <input type="password" required v-model="password" />
+      <input
+        v-model="password"
+        type="password"
+        required
+      />
     </label>
     <button type="submit">Login</button>
   </form>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from '../store';
 
-@Component({ name: 'Login' })
-export default class Login extends Vue {
-  name: string = 'nikola'
-
-  password: string = 'password'
-
-  async login() {
-    const { name, password } = this;
-    await this.$store.dispatch('login', { name, password });
-    if (this.$store.state.authenticated) { this.$router.push('/'); }
-  }
-}
+const store = useStore();
+const router = useRouter();
+const name = ref('joe');
+const password = ref('password');
+const login = async () => {
+  await store.login({ name: name.value, password: password.value });
+  router.push('/');
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

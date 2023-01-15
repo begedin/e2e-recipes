@@ -2,7 +2,7 @@ import { post, get, remove } from './api';
 export type Todo = {
   id: number;
   title: string;
-  // eslint-disable-next-line camelcase
+  // eslint-disable-next-line camelcase, @typescript-eslint/naming-convention
   user_id: number;
 };
 

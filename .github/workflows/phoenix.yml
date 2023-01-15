@@ -1,0 +1,85 @@
+name: Phoenix + Wallaby
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+env:
+  cachev: 1
+
+# make sure new pushes to PR branch cancel in progress workflow runs for this PR
+# the || github.ref at the end ensures the opposite on merges to master
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_and_test:
+    name: Build and test everything
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:15
+        ports: ["5432:5432"]
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Elixir
+        uses: erlef/setup-elixir@v1
+        with:
+          elixir-version: "1.14"
+          otp-version: "25"
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 19.4
+
+      - name: Restore elixir backend cache
+        id: elixir-cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            phoenix/deps
+            phoenix/_build
+            phoenix/priv/plts
+          key: ${{ runner.os }}-mix-${{ hashFiles('phoenix/mix.lock') }}
+          restore-keys: ${{ runner.os }}-elixir-cache-${{ env.cachev }}-
+
+      - name: Fetch backend deps & compile
+        if: steps.elixir-cache.outputs.cache-hit != 'true'
+        run: (cd phoenix; mix deps.get; MIX_ENV=test mix compile)
+
+      - name: Restore elixir frontend cache
+        id: elixir-frontend-cache
+        uses: actions/cache@v3
+        with:
+          path: phoenix/assets/node_modules
+          key: ${{ runner.os }}-mix-${{ ('phoenix/assets/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-elixir-frontend-cache-${{ env.cachev }}-
+
+      - name: Fetch elixir frontend deps
+        if: steps.elixir-frontend-cache.outputs.cache-hit != 'true'
+        run: (cd phoenix/assets; npm i)
+
+      - name: Lint elixir (credo)
+        run: npm run lint:phoenix:credo
+
+      - name: Lint elixir (formatter)
+        run: npm run lint:phoenix:formatter
+
+      - name: Lint elixir (dialyzer)
+        run: npm run lint:phoenix:dialyzer
+
+      - name: Run Elixir E2E tests
+        run: npm run test:ci:phoenix

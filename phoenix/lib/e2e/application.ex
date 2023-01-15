@@ -8,12 +8,9 @@ defmodule E2E.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      # Start the Ecto repository
+      {Phoenix.PubSub, [name: E2E.PubSub, adapter: Phoenix.PubSub.PG2]},
       E2E.Repo,
-      # Start the endpoint when the application starts
       E2EWeb.Endpoint
-      # Starts a worker by calling: E2E.Worker.start_link(arg)
-      # {E2E.Worker, arg},
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

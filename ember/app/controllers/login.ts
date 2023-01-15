@@ -2,19 +2,25 @@ import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { action, set } from '@ember/object';
 import Session from 'todo/services/session';
+import type Store from '@ember-data/store';
 
 export default class Login extends Controller.extend({}) {
   @service session!: Session;
 
   error: string | null = null;
 
+  @service store!: Store;
+
+
+
   @action
-  async login(name: string, password: string) {
+  async login() {
     let login: { token: string };
     set(this, 'error', null);
     try {
+      const { name, password } = this;
       login = await this.store.createRecord('login', { name, password }).save();
-    } catch (e) {
+    } catch (e: any) {
       if (e.code === 'UnauthorizedError') {
         set(this, 'error', 'Incorrect username or password');
       }
@@ -28,7 +34,7 @@ export default class Login extends Controller.extend({}) {
 }
 
 declare module '@ember/controller' {
-  interface Registry {
+  export interface Registry {
     login: Login;
   }
 }

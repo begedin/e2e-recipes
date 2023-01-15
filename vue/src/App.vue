@@ -1,25 +1,48 @@
 <template>
   <main id="app">
     <nav id="nav">
-      <router-link v-if="!$store.state.authenticated" to="/register">Register</router-link>
-      <router-link v-if="!$store.state.authenticated" to="/login">Login</router-link>
-      <router-link v-if="$store.state.authenticated" to="/">Todos</router-link>
-      <button v-if="$store.state.authenticated" @click="logout">Log Out</button>
+      <router-link
+        v-if="!store.authenticated"
+        to="/register"
+        >Register</router-link
+      >
+      <router-link
+        v-if="!store.authenticated"
+        to="/login"
+        >Login</router-link
+      >
+      <router-link
+        v-if="store.authenticated"
+        to="/"
+        >Todos</router-link
+      >
+      <button
+        v-if="store.authenticated"
+        type="button"
+        @click="logout"
+      >
+        Log Out
+      </button>
     </nav>
-    <div class="error" v-if="$store.state.error">{{$store.state.error}}</div>
+    <div
+      v-if="store.error"
+      class="error"
+    >
+      {{ store.error }}
+    </div>
     <router-view class="content" />
   </main>
 </template>
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+<script lang="ts" setup>
+import { useRouter } from 'vue-router';
+import { useStore } from '~/src/store';
 
-@Component({ name: 'app' })
-export default class App extends Vue {
-  async logout() {
-    await this.$store.dispatch('logout');
-    this.$router.push('/login');
-  }
-}
+const store = useStore();
+const router = useRouter();
+const logout = async () => {
+  store.logout();
+  router.push('/login');
+};
 </script>
 <style lang="scss">
 $color1: #f3f3f3;
@@ -51,8 +74,7 @@ body {
   &:active {
     background: $color3;
     color: $color1;
-    box-shadow: 0px 7px 20px 5px rgba($color2, 0.3),
-      0px 7px 2px -5px rgba($color3, 0.2);
+    box-shadow: 0px 7px 20px 5px rgba($color2, 0.3), 0px 7px 2px -5px rgba($color3, 0.2);
   }
 }
 
@@ -100,7 +122,7 @@ form {
     display: grid;
     grid-auto-flow: row;
     justify-content: start;
-    row-gap: .5em;
+    row-gap: 0.5em;
   }
 
   input,
@@ -134,5 +156,4 @@ h3 {
   color: $color4;
   font-weight: bold;
 }
-
 </style>

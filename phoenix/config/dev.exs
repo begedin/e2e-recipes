@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Configure your database
 config :e2e, E2E.Repo,
@@ -20,15 +20,7 @@ config :e2e, E2EWeb.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: [
-    node: [
-      "node_modules/webpack/bin/webpack.js",
-      "--mode",
-      "development",
-      "--watch-stdin",
-      cd: Path.expand("../assets", __DIR__)
-    ]
-  ]
+  watchers: [npm: ["run", "watch", cd: Path.expand("../assets", __DIR__)]]
 
 # ## SSL Support
 #
