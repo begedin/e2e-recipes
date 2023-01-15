@@ -16,8 +16,7 @@ describe('Todo', () => {
   });
 
   it('creates todos', () => {
-    cy.create('user', {})
-      .then(user => cy.login(user));
+    cy.create('user', {}).then(user => cy.login(user));
 
     cy.url().should('not.contain', 'login');
 

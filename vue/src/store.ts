@@ -14,7 +14,7 @@ export const useStore = defineStore('main', () => {
 
     try {
       const { data } = await post<User>('users', { user: params });
-      login(params);
+      await login(params);
       authenticated.value = true;
       user.value = data;
     } catch (e) {

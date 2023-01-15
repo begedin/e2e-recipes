@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vite",
+    "start": "vite",
     "build": "vue-tsc && vite build",
     "serve:e2e": "(cd ../phoenix; MIX_ENV=test E2E=1 SANDBOX=1 mix phx.server)",
     "serve:e2e:ci": "(cd ../phoenix; MIX_ENV=test E2E=1 SANDBOX=1 HEADLESS=1 mix phx.server)",
-    "test:e2e": "(npm run serve:e2e & vue-cli-service test:e2e && kill $(lsof -t -i:4000))",
-    "test:e2e:ci": "(npm run serve:e2e:ci & vue-cli-service test:e2e --headless && kill $(lsof -t -i:4000))",
+    "cypress:open": "cypress open",
+    "test:e2e": "npm run serve:e2e & npm run start & cypress run && kill $(lsof -t -i:4000)",
+    "test:e2e:ci": "(npm run serve:e2e:ci & npm run serve & cypress run && kill $(lsof -t -i:4000))",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src"
   },
   "dependencies": {
@@ -22,6 +23,7 @@
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
     "axios": "^1.2.2",
+    "cypress": "^12.3.0",
     "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
