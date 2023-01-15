@@ -70,7 +70,10 @@ jobs:
 
       - name: Fetch backend deps & compile
         if: steps.elixir-cache.outputs.cache-hit != 'true'
-        run: (cd phoenix; mix deps.get; MIX_ENV=test mix do compile, ecto.create, ecto.migrate)
+        run: (cd phoenix; mix deps.get; MIX_ENV=test mix do compile)
+
+      - name: Setup db
+        run: (cd phoenix; mix ecto.create; mix ecto.migrate)
 
       - name: Restore vue cache
         id: vue-cache
