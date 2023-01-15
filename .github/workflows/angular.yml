@@ -1,4 +1,4 @@
-name: Elixir CI
+name: Angular + Playwright
 
 on:
   push:
@@ -72,55 +72,20 @@ jobs:
         if: steps.elixir-frontend-cache.outputs.cache-hit != 'true'
         run: (cd phoenix/assets; npm i)
 
-      - name: Restore vue cache
-        id: vue-cache
+      - name: Restore angular cache
+        id: angular-cache
         uses: actions/cache@v3
         with:
-          path: |
-            vue/node_modules
-            /home/runner/.cache/Cypress
-          key: ${{ runner.os }}-mix-${{ hashFiles('vue/package-lock.json') }}
-          restore-keys: ${{ runner.os }}-vue-cache-${{ env.cachev }}-
+          path: angular/node_modules
+          key: ${{ runner.os }}-mix-${{ hashFiles('angular/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-angular-cache-${{ env.cachev }}-
 
-      - name: Fetch vue deps
-        if: steps.vue-cache.outputs.cache-hit != 'true'
-        run: (cd vue; npm i)
+      - name: Fetch angular deps
+        if: steps.angular-cache.outputs.cache-hit != 'true'
+        run: (cd angular; npm i)
 
-      - name: Lint Vue
-        run: npm run lint:vue
+      - name: Lint Angular
+        run: npm run lint:angular
 
-      - name: Run Vue E2E tests
-        run: npm run test:ci:vue
-
-      - name: Restore react cache
-        id: react-cache
-        uses: actions/cache@v3
-        with:
-          path: react/node_modules
-          key: ${{ runner.os }}-mix-${{ hashFiles('react/package-lock.json') }}
-          restore-keys: ${{ runner.os }}-react-cache-${{ env.cachev }}-
-
-      - name: Fetch react deps
-        if: steps.react-cache.outputs.cache-hit != 'true'
-        run: (cd react; npm i)
-
-      - name: Lint React
-        run: npm run lint:react
-
-      - name: Run React E2E tests
-        run: npm run test:ci:react
-
-      - name: Restore ember cache
-        id: ember-cache
-        uses: actions/cache@v3
-        with:
-          path: ember/node_modules
-          key: ${{ runner.os }}-mix-${{ hashFiles('ember/package-lock.json') }}
-          restore-keys: ${{ runner.os }}-ember-cache-${{ env.cachev }}-
-
-      - name: Fetch ember deps
-        if: steps.ember-cache.outputs.cache-hit != 'true'
-        run: (cd ember; npm i)
-
-      - name: Run Ember E2E tests
-        run: npm run test:ci:ember
+      - name: Run Angular E2E tests
+        run: npm run test:ci:angular
