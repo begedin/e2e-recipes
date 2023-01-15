@@ -1,20 +1,7 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import Component from 'vue-class-component';
-import Todos from '@/views/Todos.vue';
-import Register from '@/views/Register.vue';
-import Login from '@/views/Login.vue';
-
-// class-component-hooks.js
-
-// Register the router hooks with their names
-Component.registerHooks([
-  'beforeRouteEnter',
-  'beforeRouteLeave',
-  'beforeRouteUpdate', // for vue-router 2.2+
-]);
-
-Vue.use(VueRouter);
+import Todos from '~/src/views/Todos.vue';
+import Register from '~/src/views/Register.vue';
+import Login from '~/src/views/Login.vue';
+import { createRouter, createWebHistory } from 'vue-router';
 
 const RegisterRoute = {
   path: '/register',
@@ -34,15 +21,10 @@ const TodosRoute = {
   component: Todos,
 };
 
-const routes = [
-  RegisterRoute,
-  LoginRoute,
-  TodosRoute,
-];
+const routes = [RegisterRoute, LoginRoute, TodosRoute];
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history: createWebHistory(),
   routes,
 });
 

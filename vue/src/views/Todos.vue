@@ -1,36 +1,32 @@
 <template>
   <div class="todos">
     <h3>Todos</h3>
-    <todo-item v-for="todo in todos" :key="todo.id" :todo="todo" />
+    <todo-item
+      v-for="todo in store.todos"
+      :key="todo.id"
+      :todo="todo"
+    />
     <add-todo />
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { State } from 'vuex-class';
-import { Todo } from '../store/types';
-import TodoItem from './Todos/TodoItem.vue';
-import AddTodo from './Todos/AddTodo.vue';
+<script lang="ts" setup>
+import TodoItem from './TodoItem.vue';
+import AddTodo from './AddTodo.vue';
+import { useStore } from '~/src/store';
+import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
-@Component({
-  name: 'home',
-  components: { AddTodo, TodoItem },
-  beforeRouteEnter: (to, from, next) => {
-    next(vm => {
-      if (!vm.$store.state.authenticated) {
-        vm.$router.replace('login');
-      }
-    });
-  },
-})
-export default class Todos extends Vue {
-  mounted() { this.$store.dispatch('fetchTodos'); }
+const store = useStore();
+const router = useRouter();
+onMounted(() => {
+  if (!store.authenticated) {
+    router.replace('login');
+    return;
+  }
 
-  @State(state => state.todos) todos!: Todo[]
-}
+  store.fetchTodos();
+});
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
