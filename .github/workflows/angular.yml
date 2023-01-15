@@ -58,7 +58,7 @@ jobs:
 
       - name: Fetch backend deps & compile
         if: steps.elixir-cache.outputs.cache-hit != 'true'
-        run: (cd phoenix; mix deps.get; MIX_ENV=test mix compile)
+        run: (cd phoenix; mix deps.get; MIX_ENV=test mix do compile, ecto.create, ecto.migrate)
 
       - name: Restore elixir frontend cache
         id: elixir-frontend-cache
@@ -70,7 +70,7 @@ jobs:
 
       - name: Fetch elixir frontend deps
         if: steps.elixir-frontend-cache.outputs.cache-hit != 'true'
-        run: (cd phoenix/assets; npm i)
+        run: (cd phoenix/assets; npm i; npm run build)
 
       - name: Restore angular cache
         id: angular-cache
