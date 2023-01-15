@@ -14,9 +14,3 @@ export default class Application extends Controller.extend({}) {
     }
   }
 }
-
-declare module '@ember/controller' {
-  interface Registry {
-    application: Application;
-  }
-}
