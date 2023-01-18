@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   build_and_test:
-    name: Build and test everything
+    name: Phoenix + Wallaby CI
     runs-on: ubuntu-latest
     services:
       db:
