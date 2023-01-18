@@ -1,12 +1,7 @@
 defmodule E2E.SandboxEnforcerPlug do
   @moduledoc """
-  Adds support for sandbox mode in the e2e environment.
-
-  In sandbox mode, the following is in effect
-
-  - the `GET /api/ping` endpoint is enabled, which is used by Jenkins to check if API is up
-  - the `POST /api/sandbox` and `DELETE /api/sandbox` endpoints are enabled, to checkout and checkin an Ecto sandbox connection
-  - all other endpoints return an error if a `sandbox` header with a valid sandbox id is not present
+  Ensures any request that doesn't have a sandbox id header while we are in e2e
+  mode, will error out with a 400.
   """
   @behaviour Plug
 
